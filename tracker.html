@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HerHealth | Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="tracker-page">
+  <header>
+    <h1>HerHealth 🌷</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="tracker.html">Tracker</a>
+      <a href="selfcare.html">Self-Care</a>
+    </nav>
+  </header>
+
+  <main class="tracker-container">
+    <!-- Smart Period Tracker Panel -->
+    <section class="tracker-panel">
+      <h2>🩸 Smart Period Tracker</h2>
+      <form id="period-form">
+        <label for="start-date">Start Date:</label>
+        <input type="date" id="start-date" name="start-date" required />
+
+        <label for="end-date">End Date:</label>
+        <input type="date" id="end-date" name="end-date" required />
+
+        <button type="submit">Log Cycle & Generate Graph</button>
+      </form>
+
+      <div id="tracker-summary">
+        <!-- Summary will appear here -->
+      </div>
+    </section>
+
+    <!-- 🌸 Calendar View -->
+    <section class="calendar-view">
+      <h2>Monthly Cycle View</h2>
+      <div id="calendar-grid">
+        <!-- JS will populate this -->
+      </div>
+    </section>
+
+    <!-- 💖 Hormonal Mood Tracker Section -->
+    <section class="tracker-graph-section">
+      <h2>Hormonal Cycle & Mood Visualizer</h2>
+      <canvas id="hormoneChart" class="chart-box"></canvas>
+    </section>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
