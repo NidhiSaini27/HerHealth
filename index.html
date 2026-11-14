@@ -1,89 +1,1567 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HerHealth</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <header class="glow-header">
-    <h1>HerHealth 🌷</h1>
-    <nav>
-      <a href="index.html" class="active">Home</a>
-      <a href="tracker.html">Tracker</a>
-      <a href="selfcare.html">Self-Care</a>
-    </nav>
-  </header>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>HerHealth</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,600;1,700&display=swap" rel="stylesheet" />
+    <style>
+      :root{
+        color-scheme: light;
+        --pink:#d6336c;
+        --pink-deep:#b02355;
+        --pink-soft:#ffe3ee;
+        --pink-softer:#fff0f6;
+        --plum:#67003c;
+        --ink:#55203f;
+        --ink-soft:#8a5570;
+        --card:#ffffff;
+        --card-trans:rgba(255,255,255,.82);
+        --line:#f6c9da;
+        --mint:#cdeeda;
+        --mint-ink:#1d6b4a;
+        --lilac:#e6d9fc;
+        --lilac-ink:#5b34a8;
+        --shadow:0 10px 30px rgba(214,51,108,.14);
+        --shadow-lg:0 18px 44px rgba(214,51,108,.20);
+        --bg1:#ffeef5; --bg2:#fde7f1; --bg3:#e9f7ff; --bg4:#fff6e9;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          color-scheme: dark;
+          --pink:#ff7fab;
+          --pink-deep:#ff5c93;
+          --pink-soft:#4a1e35;
+          --pink-softer:#3a1830;
+          --plum:#ffc2da;
+          --ink:#f9e4ef;
+          --ink-soft:#d9a7c0;
+          --card:#33162b;
+          --card-trans:rgba(51,22,43,.88);
+          --line:#5d2a47;
+          --mint:#1e4634;
+          --mint-ink:#9fe8c3;
+          --lilac:#3d2a63;
+          --lilac-ink:#cdbcf7;
+          --shadow:0 10px 30px rgba(0,0,0,.4);
+          --shadow-lg:0 18px 44px rgba(0,0,0,.5);
+          --bg1:#2a0f22; --bg2:#33142a; --bg3:#14202e; --bg4:#2b1c10;
+        }
+      }
+      *{ box-sizing:border-box; }
+      html{ scroll-behavior:smooth; }
+      body{
+        margin:0;
+        font-family:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+        color:var(--ink);
+        min-height:100vh;
+        position:relative;
+        overflow-x:hidden;
+      }
+      /* Slow-moving pastel gradient sky */
+      body::before{
+        content:""; position:fixed; inset:-40%; z-index:-2;
+        background:linear-gradient(120deg,var(--bg1),var(--bg2),var(--bg3),var(--bg4),var(--bg2),var(--bg1));
+        background-size:300% 300%;
+        animation:skyMove 36s ease-in-out infinite alternate;
+      }
+      @keyframes skyMove{
+        0%{ background-position:0% 40%; transform:rotate(0deg); }
+        50%{ background-position:80% 60%; }
+        100%{ background-position:100% 30%; transform:rotate(2deg); }
+      }
+      body::after{
+        content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+        background:
+          radial-gradient(420px 300px at 12% 8%, rgba(255,182,213,.35), transparent 70%),
+          radial-gradient(500px 340px at 88% 22%, rgba(190,227,255,.30), transparent 70%),
+          radial-gradient(460px 380px at 70% 92%, rgba(255,226,178,.28), transparent 70%);
+      }
+      button,[role="button"],select,summary,input:not([type="checkbox"],[type="radio"]){ min-height:2.75rem; }
+      button{ font-family:inherit; cursor:pointer; }
+      a{ color:var(--pink); }
+      h1,h2,h3{ color:var(--plum); margin:0; line-height:1.2; }
+      p{ line-height:1.65; }
 
-  <section class="hero">
-    <div class="petals"></div>
-    <h2 class="slide-up">Welcome to Your Soft Space</h2>
-    <p class="fade-in">Your smart gentle guide to menstrual wellness.</p>
-    <img src="https://i.pinimg.com/736x/42/9a/7e/429a7e5dea9d3dbafd87d3852136ec98.jpg" alt="Cute character" class="float"/>
-  </section>
+      .wrap{ max-width:1060px; margin:0 auto; padding:0 18px 40px; }
 
-  <h2 class="section-title reveal">What is HerHealth?</h2>
-  <p class="about-text reveal">
-HerHealth is your all-in-one wellness companion built to support and empower girls and women through every phase of their cycle. With a smart <b>Period Tracker</b>, interactive <b>dashboard</b>, and a growing library of <b>self-care tips</b>, it helps you log, understand, and care for your body with ease. From tracking symptoms to offering guidance on mental and physical well-being, HerHealth makes your menstrual journey feel understood, organized, and beautifully supported.
-  </p>
+      /* ---------- Header / nav ---------- */
+      header{
+        position:sticky; top:12px; z-index:60;
+        max-width:1060px; margin:12px auto 0; padding:0 18px;
+      }
+      .navshell{
+        display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+        background:linear-gradient(120deg,#ffd3e4,#ffe9f2 55%,#ffdcef);
+        border:2px solid #fff;
+        border-radius:999px;
+        padding:8px 10px 8px 20px;
+        box-shadow:var(--shadow);
+      }
+      @media (prefers-color-scheme: dark){
+        .navshell{ background:linear-gradient(120deg,#57203f,#40203a 60%,#57203f); border-color:#6d3355; }
+      }
+      .brand{ font-size:1.45rem; font-weight:900; color:var(--plum); letter-spacing:.2px; margin-right:auto; white-space:nowrap; }
+      .brand .tulip{ display:inline-block; animation:bob 3.2s ease-in-out infinite; }
+      @keyframes bob{ 0%,100%{ transform:translateY(0) rotate(-4deg);} 50%{ transform:translateY(-4px) rotate(5deg);} }
+      nav{ display:flex; gap:6px; flex-wrap:wrap; }
+      .navbtn{
+        border:none; background:transparent; color:var(--plum);
+        font-weight:800; font-size:1rem; padding:10px 18px; border-radius:999px;
+        transition:all .25s ease; min-height:44px;
+      }
+      .navbtn:hover{ background:rgba(255,255,255,.55); transform:translateY(-1px); }
+      .navbtn.active{ background:#fff; color:var(--pink); box-shadow:0 4px 14px rgba(214,51,108,.25); }
+      @media (prefers-color-scheme: dark){
+        .navbtn:hover{ background:rgba(255,255,255,.12); }
+        .navbtn.active{ background:#ffd9e8; color:#a11147; }
+      }
 
-  <div class="phase-ribbon">
-    <div class="phase-card reveal"><span class="p-emoji">🌧</span><h4>Menstrual</h4><p>Day 1–5 · Rest, warmth and gentle days. Your body is shedding and recharging.</p></div>
-    <div class="phase-card follicular reveal d1"><span class="p-emoji">🌱</span><h4>Follicular</h4><p>Day 6–14 · Energy climbs back. Great days to start, build and try new things.</p></div>
-    <div class="phase-card ovulation reveal d2"><span class="p-emoji">💕</span><h4>Ovulation</h4><p>Day 14–17 · Peak glow and confidence. Your most social, sparkly window.</p></div>
-    <div class="phase-card luteal reveal d3"><span class="p-emoji">🌙</span><h4>Luteal</h4><p>Day 18–28 · Slow down, nest, reflect. Comfort and calm over pressure.</p></div>
-  </div>
+      /* ---------- Views ---------- */
+      .view{ display:none; }
+      .view.active{ display:block; animation:viewIn .55s cubic-bezier(.22,.9,.3,1) both; }
+      @keyframes viewIn{ from{ opacity:0; transform:translateY(16px);} to{ opacity:1; transform:none;} }
 
-  <div class="glance-wrap">
-    <div class="glance-card reveal">
-      <h3>🌷 Your cycle at a glance</h3>
-      <div id="glance-body"></div>
+      /* ---------- Reveal on scroll ---------- */
+      .rv{ opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s cubic-bezier(.22,.9,.3,1); }
+      .rv.on{ opacity:1; transform:none; }
+
+      /* ---------- Cards & sections ---------- */
+      .card{
+        background:var(--card-trans);
+        backdrop-filter:blur(6px);
+        border:1.5px solid var(--line);
+        border-radius:26px;
+        box-shadow:var(--shadow);
+        padding:26px;
+      }
+      .card.hoverable{ transition:transform .3s ease, box-shadow .3s ease; }
+      .card.hoverable:hover{ transform:translateY(-5px); box-shadow:var(--shadow-lg); }
+      section.block{ margin-top:34px; }
+      .sec-title{ font-size:1.7rem; font-weight:900; margin-bottom:6px; }
+      .sec-sub{ color:var(--ink-soft); font-weight:600; margin:0 0 18px; }
+      .btn{
+        border:none; border-radius:999px; padding:12px 26px;
+        background:linear-gradient(120deg,var(--pink),#f06595);
+        color:#fff; font-weight:800; font-size:1rem;
+        box-shadow:0 8px 20px rgba(214,51,108,.35);
+        transition:transform .2s ease, box-shadow .2s ease, filter .2s ease;
+        min-height:48px;
+      }
+      .btn:hover{ transform:translateY(-2px) scale(1.02); box-shadow:0 12px 26px rgba(214,51,108,.45); filter:brightness(1.05); }
+      .btn:active{ transform:scale(.97); }
+      .btn.ghost{ background:var(--card); color:var(--pink); border:2px solid var(--pink); box-shadow:none; }
+      .btn.small{ padding:8px 18px; min-height:40px; font-size:.92rem; }
+
+      /* ---------- Hero ---------- */
+      .hero{
+        position:relative; overflow:hidden; margin-top:22px;
+        border-radius:34px; padding:52px 30px 58px; text-align:center;
+        background:linear-gradient(135deg,#ffd9e8,#ffeef6 45%,#e7f4ff);
+        border:2px solid #fff; box-shadow:var(--shadow-lg);
+      }
+      @media (prefers-color-scheme: dark){
+        .hero{ background:linear-gradient(135deg,#4d1e3a,#33162b 55%,#1d2c3d); border-color:#6d3355; }
+      }
+      .petals{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+      .petal{
+        position:absolute; top:-8%; font-size:22px; opacity:0;
+        animation:fall linear infinite; will-change:transform;
+      }
+      @keyframes fall{
+        0%{ transform:translate3d(0,-6vh,0) rotate(0deg); opacity:0; }
+        8%{ opacity:.95; }
+        25%{ transform:translate3d(var(--sway,20px),26vh,0) rotate(95deg); }
+        50%{ transform:translate3d(calc(var(--sway,20px) * -1),54vh,0) rotate(190deg); }
+        75%{ transform:translate3d(var(--sway,20px),80vh,0) rotate(275deg); }
+        96%{ opacity:.9; }
+        100%{ transform:translate3d(0,112vh,0) rotate(360deg); opacity:0; }
+      }
+      .hero h1{
+        position:relative; font-size:clamp(2.1rem,6vw,3.4rem); font-weight:900; letter-spacing:.3px;
+        background:linear-gradient(100deg,#d6336c,#f06595,#b197fc,#ffa8c5,#d6336c);
+        background-size:250% auto;
+        -webkit-background-clip:text; background-clip:text;
+        -webkit-text-fill-color:transparent; color:transparent;
+        animation:shimmer 6s linear infinite;
+      }
+      @keyframes shimmer{ to{ background-position:250% center; } }
+      .hero .sub{ position:relative; font-size:clamp(1.02rem,2.6vw,1.25rem); font-weight:700; color:var(--ink); margin:14px auto 6px; max-width:560px; }
+      .hero-art{ position:relative; width:min(300px,72vw); margin:20px auto 4px; animation:floaty 5.5s ease-in-out infinite; filter:drop-shadow(0 16px 22px rgba(214,51,108,.25)); }
+      @keyframes floaty{ 0%,100%{ transform:translateY(0) rotate(-1.2deg);} 50%{ transform:translateY(-14px) rotate(1.2deg);} }
+      .hero-cta{ position:relative; margin-top:18px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+
+      /* ---------- Phase cards ---------- */
+      .grid4{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+      .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+      @media (max-width:860px){ .grid4{ grid-template-columns:repeat(2,1fr);} }
+      @media (max-width:560px){ .grid4,.grid2{ grid-template-columns:1fr;} }
+      .phase-card{ border-radius:24px; padding:22px; border:1.5px solid var(--line); box-shadow:var(--shadow); transition:transform .3s ease, box-shadow .3s ease; }
+      .phase-card:hover{ transform:translateY(-6px) rotate(-.5deg); box-shadow:var(--shadow-lg); }
+      .phase-card .emoji{ font-size:2.1rem; display:block; margin-bottom:8px; animation:bob 4s ease-in-out infinite; }
+      .phase-card h3{ font-size:1.15rem; font-weight:900; }
+      .phase-card .days{ font-weight:800; color:var(--pink); font-size:.9rem; }
+      .phase-card p{ margin:8px 0 0; font-size:.95rem; color:var(--ink); }
+      .pc-menstrual{ background:linear-gradient(150deg,#ffd9e4,var(--card)); }
+      .pc-follicular{ background:linear-gradient(150deg,#d7f2e0,var(--card)); }
+      .pc-ovulation{ background:linear-gradient(150deg,#ffe0ef,var(--card)); }
+      .pc-luteal{ background:linear-gradient(150deg,#e9defc,var(--card)); }
+      @media (prefers-color-scheme: dark){
+        .pc-menstrual{ background:linear-gradient(150deg,#57263f,var(--card)); }
+        .pc-follicular{ background:linear-gradient(150deg,#20402f,var(--card)); }
+        .pc-ovulation{ background:linear-gradient(150deg,#552239,var(--card)); }
+        .pc-luteal{ background:linear-gradient(150deg,#372a5c,var(--card)); }
+      }
+
+      /* ---------- Glance / tip ---------- */
+      .glance-big{ font-size:2rem; font-weight:900; color:var(--pink); }
+      .glance-row{ display:flex; gap:14px; flex-wrap:wrap; margin-top:12px; }
+      .glance-chip{ background:var(--pink-softer); border:1.5px solid var(--line); border-radius:16px; padding:10px 16px; font-weight:700; font-size:.95rem; }
+      .glance-chip b{ color:var(--pink); }
+      .tip-text{ font-size:1.12rem; font-weight:700; min-height:3.2em; display:flex; align-items:center; }
+      .fade-swap{ transition:opacity .35s ease, transform .35s ease; }
+      .fade-swap.out{ opacity:0; transform:translateY(6px); }
+
+      /* ---------- News cards ---------- */
+      .news-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+      @media (max-width:640px){ .news-grid{ grid-template-columns:1fr; } }
+      .news-card{
+        display:flex; gap:14px; align-items:flex-start; text-decoration:none; color:var(--ink);
+        background:var(--card-trans); border:1.5px solid var(--line); border-radius:22px; padding:20px;
+        box-shadow:var(--shadow); transition:transform .3s ease, box-shadow .3s ease;
+      }
+      .news-card:hover{ transform:translateY(-5px); box-shadow:var(--shadow-lg); }
+      .news-card .n-emoji{ font-size:1.9rem; line-height:1; }
+      .news-card h3{ font-size:1.05rem; font-weight:800; }
+      .news-card p{ margin:4px 0 0; font-size:.92rem; color:var(--ink-soft); font-weight:600; }
+      .news-card .src{ color:var(--pink); font-weight:800; font-size:.85rem; }
+
+      /* ---------- Tracker ---------- */
+      .tracker-top{ display:grid; grid-template-columns:1fr 1.15fr; gap:16px; align-items:stretch; }
+      @media (max-width:820px){ .tracker-top{ grid-template-columns:1fr; } }
+      .side-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:stretch; }
+      .side-row > *{ min-width:0; }
+      .side-row .forecast-card, .side-row .chart-hero-card{ height:100%; }
+      @media (max-width:900px){ .side-row{ grid-template-columns:1fr; } .side-row .forecast-card, .side-row .chart-hero-card{ height:auto; } }
+      form.log-form label{ display:block; font-weight:800; color:var(--plum); margin:14px 0 6px; font-size:.95rem; }
+      form.log-form input[type="date"]{
+        width:100%; padding:12px 14px; border-radius:14px; border:2px solid var(--line);
+        background:var(--pink-softer); color:var(--ink); font-family:inherit; font-weight:700; font-size:1rem;
+      }
+      form.log-form input[type="date"]:focus{ outline:none; border-color:var(--pink); box-shadow:0 0 0 4px rgba(214,51,108,.15); }
+      .form-err{ color:#c2255c; font-weight:800; min-height:1.4em; margin:8px 0 0; font-size:.92rem; }
+      .form-summary{ margin-top:12px; background:var(--pink-softer); border:1.5px dashed var(--pink); border-radius:16px; padding:12px 16px; font-weight:700; display:none; }
+      .form-summary.show{ display:block; animation:viewIn .4s ease both; }
+
+      .ring-wrap{ display:flex; gap:22px; align-items:center; flex-wrap:wrap; }
+      .ring-box{ position:relative; width:190px; height:190px; flex:none; margin:0 auto; }
+      .ring-box svg{ transform:rotate(-90deg); }
+      .ring-bg{ stroke:var(--pink-soft); }
+      .ring-fg{ stroke:url(#ringGrad); stroke-linecap:round; transition:stroke-dashoffset 1.4s cubic-bezier(.22,.9,.3,1); }
+      .ring-center{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 20px; }
+      .ring-center .daynum{ font-size:2rem; font-weight:900; color:var(--pink); line-height:1; }
+      .ring-center .phasename{ font-weight:900; color:var(--plum); margin-top:4px; font-size:1rem; }
+      .ring-center .ofdays{ font-size:.82rem; font-weight:700; color:var(--ink-soft); }
+      .ring-side{ flex:1; min-width:210px; }
+      .ring-side .count{ font-size:2.3rem; font-weight:900; color:var(--plum); line-height:1.05; }
+      .ring-side .count small{ font-size:1rem; color:var(--pink); font-weight:800; }
+      .mini-stats{ display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+      .mini-stats .ms{ background:var(--pink-softer); border:1.5px solid var(--line); border-radius:14px; padding:8px 14px; font-weight:700; font-size:.9rem; }
+      .mini-stats .ms b{ color:var(--pink); }
+
+      .stats-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+      @media (max-width:720px){ .stats-row{ grid-template-columns:repeat(2,1fr); } }
+      .stat-card{ text-align:center; padding:20px 10px; }
+      .stat-card .num{ font-size:2.2rem; font-weight:900; color:var(--pink); line-height:1; }
+      .stat-card .lbl{ font-weight:800; color:var(--plum); margin-top:6px; font-size:.92rem; }
+      .stat-card .emoji{ font-size:1.5rem; display:block; margin-bottom:6px; }
+
+      /* ---------- Calendar ---------- */
+      .cal-head{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:14px; }
+      .cal-head h3{ font-size:1.3rem; font-weight:900; }
+      .cal-nav{ border:2px solid var(--line); background:var(--pink-softer); color:var(--pink); border-radius:50%; width:46px; height:46px; font-size:1.3rem; font-weight:900; transition:all .2s ease; flex:none; }
+      .cal-nav:hover{ background:var(--pink); color:#fff; transform:scale(1.08); }
+      .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:7px; }
+      .cal-dow{ text-align:center; font-weight:900; color:var(--pink); font-size:.82rem; padding:4px 0; }
+      .cal-day{
+        position:relative; border:2px solid transparent; background:var(--pink-softer);
+        border-radius:14px; min-height:52px; padding:6px 2px 12px;
+        font-weight:800; font-size:.98rem; color:var(--ink);
+        transition:transform .18s ease, box-shadow .18s ease, background .2s ease;
+        animation:popIn .45s cubic-bezier(.34,1.56,.64,1) both;
+      }
+      @keyframes popIn{ from{ opacity:0; transform:scale(.6) translateY(8px);} to{ opacity:1; transform:none;} }
+      .cal-day:hover{ transform:scale(1.1); box-shadow:0 6px 16px rgba(214,51,108,.25); z-index:2; }
+      .cal-day.empty{ background:transparent; animation:none; pointer-events:none; }
+      .cal-day.d-period{ background:linear-gradient(140deg,#ff8fab,#f06595); color:#fff; }
+      .cal-day.d-predicted{ background:var(--pink-soft); border:2px dashed var(--pink); color:var(--pink-deep); }
+      .cal-day.d-fertile{ background:var(--mint); color:var(--mint-ink); }
+      .cal-day.d-ovulation{ background:var(--lilac); color:var(--lilac-ink); }
+      .cal-day.d-today{ box-shadow:0 0 0 3px var(--card), 0 0 0 5.5px var(--plum); }
+      .cal-day.selected{ box-shadow:0 0 0 3px var(--card), 0 0 0 6px var(--pink); transform:scale(1.06); }
+      .cal-day .dot{ position:absolute; bottom:5px; left:50%; transform:translateX(-50%); width:7px; height:7px; border-radius:50%; background:var(--plum); }
+      .cal-day.d-period .dot{ background:#fff; }
+      .legend{ display:flex; gap:14px; flex-wrap:wrap; margin-top:16px; font-weight:700; font-size:.88rem; }
+      .legend span{ display:inline-flex; align-items:center; gap:6px; }
+      .swatch{ width:18px; height:18px; border-radius:6px; display:inline-block; flex:none; }
+      .sw-period{ background:linear-gradient(140deg,#ff8fab,#f06595); }
+      .sw-predicted{ background:var(--pink-soft); border:2px dashed var(--pink); }
+      .sw-fertile{ background:var(--mint); }
+      .sw-ovulation{ background:var(--lilac); }
+      .sw-today{ background:var(--pink-softer); box-shadow:0 0 0 2px var(--card), 0 0 0 4px var(--plum); }
+      .sw-dot{ background:var(--plum); border-radius:50%; width:9px; height:9px; margin:0 4px; }
+
+      /* ---------- Daily log ---------- */
+      .daylog{ margin-top:18px; border-top:2px dashed var(--line); padding-top:18px; }
+      .daylog h3{ font-size:1.15rem; font-weight:900; }
+      .pick-label{ font-weight:800; color:var(--plum); margin:14px 0 8px; font-size:.92rem; }
+      .mood-row{ display:flex; gap:8px; flex-wrap:wrap; }
+      .mood-btn{
+        font-size:1.55rem; width:52px; height:52px; border-radius:16px;
+        border:2px solid var(--line); background:var(--pink-softer);
+        transition:all .18s ease; line-height:1;
+      }
+      .mood-btn:hover{ transform:scale(1.14) rotate(-4deg); }
+      .mood-btn.sel{ border-color:var(--pink); background:var(--pink-soft); transform:scale(1.14); box-shadow:0 6px 14px rgba(214,51,108,.3); }
+      .chip-row{ display:flex; gap:8px; flex-wrap:wrap; }
+      .chip{
+        border:2px solid var(--line); background:var(--card); color:var(--ink);
+        border-radius:999px; padding:8px 16px; font-weight:800; font-size:.9rem;
+        transition:all .18s ease; min-height:42px;
+      }
+      .chip:hover{ transform:translateY(-2px); border-color:var(--pink); }
+      .chip.sel{ background:var(--pink); border-color:var(--pink); color:#fff; box-shadow:0 6px 14px rgba(214,51,108,.3); }
+      .saved-note{ font-weight:700; color:var(--mint-ink); margin-top:10px; min-height:1.3em; font-size:.92rem; }
+
+      /* ---------- History & chart ---------- */
+      .hist-item{
+        display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+        background:var(--pink-softer); border:1.5px solid var(--line);
+        border-radius:16px; padding:12px 16px; margin-bottom:10px; font-weight:700;
+        animation:viewIn .4s ease both;
+      }
+      .hist-item .h-dates{ font-weight:900; color:var(--plum); }
+      .hist-item .h-meta{ color:var(--ink-soft); font-size:.9rem; }
+      .hist-del{
+        margin-left:auto; border:none; background:#ffe0ea; color:#c2255c;
+        border-radius:999px; padding:8px 16px; font-weight:800; min-height:40px;
+        transition:all .2s ease;
+      }
+      .hist-del:hover{ background:#c2255c; color:#fff; }
+      .empty-note{ color:var(--ink-soft); font-weight:700; text-align:center; padding:14px 0 4px; }
+      .chart-legend{ display:flex; gap:16px; flex-wrap:wrap; font-weight:800; font-size:.9rem; margin-bottom:8px; }
+      .chart-legend i{ width:22px; height:5px; border-radius:3px; display:inline-block; vertical-align:middle; margin-right:6px; }
+      .chart-svg{ width:100%; height:auto; display:block; }
+      .chart-line{ fill:none; stroke-width:4.5; stroke-linecap:round; }
+
+      /* ---------- Forecast & big chart ---------- */
+      .forecast-card{
+        background:linear-gradient(135deg,#fff0f6,#ffe3ee 55%,#e6d9fc);
+        border:2px solid #fff; border-radius:28px; box-shadow:var(--shadow-lg); padding:26px;
+      }
+      @media (prefers-color-scheme: dark){ .forecast-card{ background:linear-gradient(135deg,#4a1e35,#33162b 55%,#372a5c); border-color:#6d3355; } }
+      .forecast-head{ display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:baseline; }
+      .forecast-badge{ background:var(--pink); color:#fff; font-weight:900; font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; padding:6px 12px; border-radius:999px; }
+      .forecast-date{ font-weight:800; color:var(--ink-soft); }
+      .forecast-main{ display:flex; gap:22px; align-items:center; flex-wrap:wrap; margin-top:16px; }
+      .forecast-emoji{ font-size:4.2rem; line-height:1; width:96px; height:96px; display:flex; align-items:center; justify-content:center; background:var(--card); border-radius:50%; box-shadow:var(--shadow); flex:none; }
+      .forecast-mood{ font-size:1.65rem; font-weight:900; color:var(--plum); line-height:1.15; }
+      .forecast-score{ font-weight:900; color:var(--pink); margin-top:4px; }
+      .score-bar{ height:10px; background:var(--pink-soft); border-radius:999px; overflow:hidden; margin-top:10px; max-width:340px; }
+      .score-fill{ height:100%; background:linear-gradient(90deg,#f06595,#ffa94d); border-radius:999px; transition:width .8s ease; }
+      .forecast-why{ font-weight:700; line-height:1.6; margin:14px 0 0; }
+      .forecast-label{ font-weight:900; color:var(--plum); margin:16px 0 8px; font-size:.92rem; letter-spacing:.02em; }
+      .symptom-chips{ display:flex; gap:8px; flex-wrap:wrap; }
+      .symptom-chips .s-chip{ background:var(--card); border:1.5px solid var(--line); color:var(--ink); border-radius:999px; padding:8px 14px; font-weight:800; font-size:.9rem; box-shadow:0 4px 10px rgba(214,51,108,.08); }
+      .chart-hero-card{ padding:28px; }
+      .chart-hero-card .chart-svg{ min-height:0; }
+      @media (max-width:640px){ .forecast-emoji{ width:80px; height:80px; font-size:3.4rem; } }
+
+      /* ---------- Pretty pink scrollbars & self-care scroller ---------- */
+      html{ scrollbar-width:thin; scrollbar-color:#f06595 #ffe3ee; }
+      ::-webkit-scrollbar{ width:10px; height:10px; }
+      ::-webkit-scrollbar-track{ background:#ffe3ee; border-radius:999px; }
+      ::-webkit-scrollbar-thumb{ background:linear-gradient(180deg,#f06595,#d6336c); border-radius:999px; border:2px solid #ffe3ee; }
+      ::-webkit-scrollbar-thumb:hover{ background:#d6336c; }
+      @media (prefers-color-scheme: dark){ html{ scrollbar-color:#ff7fab #3a1830; } ::-webkit-scrollbar-track{ background:#3a1830; } ::-webkit-scrollbar-thumb{ border-color:#3a1830; } }
+      .sc-scroll{
+        max-height:min(76vh,760px); overflow-y:auto; overflow-x:hidden; scroll-behavior:smooth;
+        padding:4px 10px 18px 2px; overscroll-behavior:contain;
+        scrollbar-width:thin; scrollbar-color:#f06595 #ffe3ee;
+      }
+      .sc-scroll::-webkit-scrollbar{ width:8px; }
+      .sc-scroll::-webkit-scrollbar-track{ background:var(--pink-soft); border-radius:999px; }
+      .sc-scroll::-webkit-scrollbar-thumb{ background:linear-gradient(180deg,#ffa8c5,#d6336c); border-radius:999px; border:1px solid var(--pink-soft); }
+      @media (max-width:720px){ .sc-scroll{ max-height:68vh; } }
+      .sc-top-btn{
+        position:fixed; right:18px; bottom:22px; z-index:90; border:none; border-radius:999px;
+        background:linear-gradient(120deg,var(--pink),#f06595); color:#fff; font-weight:900;
+        padding:12px 18px; box-shadow:0 12px 26px rgba(214,51,108,.4); min-height:48px;
+        opacity:0; visibility:hidden; transform:translateY(14px); transition:all .3s ease;
+      }
+      .sc-top-btn.show{ opacity:1; visibility:visible; transform:none; }
+      .sc-top-btn:hover{ transform:translateY(-3px); }
+
+      /* ---------- Self-care ---------- */
+      .affirm{
+        margin-top:22px; text-align:center; border-radius:26px; padding:26px 22px;
+        background:linear-gradient(120deg,#ffd3e4,#ffe9f2,#e6d9fc);
+        border:2px solid #fff; box-shadow:var(--shadow);
+        font-size:clamp(1.15rem,3vw,1.5rem); font-weight:900; color:var(--plum);
+      }
+      @media (prefers-color-scheme: dark){ .affirm{ background:linear-gradient(120deg,#57203f,#40203a,#372a5c); border-color:#6d3355; } }
+      .sc-layout{ display:grid; grid-template-columns:210px 1fr; gap:18px; margin-top:22px; align-items:start; }
+      @media (max-width:720px){ .sc-layout{ grid-template-columns:1fr; } }
+      .sc-tabs{ display:flex; flex-direction:column; gap:8px; }
+      @media (max-width:720px){ .sc-tabs{ flex-direction:row; flex-wrap:wrap; } }
+      .sc-tab{
+        text-align:left; border:2px solid var(--line); background:var(--card-trans);
+        color:var(--plum); font-weight:800; font-size:1rem; border-radius:16px; padding:12px 16px;
+        transition:all .22s ease; min-height:48px;
+      }
+      .sc-tab:hover{ transform:translateX(4px); border-color:var(--pink); }
+      @media (max-width:720px){ .sc-tab:hover{ transform:translateY(-2px); } }
+      .sc-tab.active{ background:linear-gradient(120deg,var(--pink),#f06595); color:#fff; border-color:transparent; box-shadow:0 8px 18px rgba(214,51,108,.35); }
+      .sc-panel{ display:none; }
+      .sc-panel.active{ display:block; animation:viewIn .45s ease both; }
+      .tip-list{ list-style:none; margin:0; padding:0; display:grid; gap:12px; }
+      .tip-list li{
+        background:var(--pink-softer); border:1.5px solid var(--line); border-radius:16px;
+        padding:14px 18px; font-weight:600; line-height:1.55;
+      }
+      .tip-list li b{ color:var(--plum); }
+      .mini-phase{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+      @media (max-width:640px){ .mini-phase{ grid-template-columns:1fr; } }
+
+      /* Flip cards */
+      .flip-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+      @media (max-width:860px){ .flip-grid{ grid-template-columns:repeat(2,1fr);} }
+      @media (max-width:540px){ .flip-grid{ grid-template-columns:1fr;} }
+      .flip{ perspective:1100px; height:230px; cursor:pointer; }
+      .flip-inner{ position:relative; width:100%; height:100%; transition:transform .8s cubic-bezier(.3,.7,.3,1); transform-style:preserve-3d; }
+      .flip.flipped .flip-inner{ transform:rotateY(180deg); }
+      .flip-face{
+        position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+        border-radius:22px; padding:20px; display:flex; flex-direction:column; justify-content:center; gap:8px;
+        box-shadow:var(--shadow); border:1.5px solid var(--line);
+      }
+      .flip-front{ background:linear-gradient(150deg,#ffd9e4,var(--card)); }
+      .flip-back{ background:linear-gradient(150deg,var(--pink),#f06595); color:#fff; transform:rotateY(180deg); }
+      .flip-face .tag{ font-size:.78rem; font-weight:900; letter-spacing:.12em; text-transform:uppercase; opacity:.85; }
+      .flip-front .myth{ font-size:1.08rem; font-weight:900; color:var(--plum); line-height:1.35; }
+      .flip-back .fact{ font-weight:700; line-height:1.5; font-size:.97rem; }
+      .flip-face .tap{ font-size:.8rem; font-weight:800; opacity:.75; margin-top:auto; }
+      .flip:hover .flip-inner{ transform:rotateY(10deg); }
+      .flip.flipped:hover .flip-inner{ transform:rotateY(170deg); }
+
+      /* Breathing */
+      .breathe-stage{ display:flex; flex-direction:column; align-items:center; gap:18px; padding:16px 0 6px; }
+      .breathe-orb{
+        width:190px; height:190px; border-radius:50%;
+        background:radial-gradient(circle at 35% 30%, #ffc2d9, var(--pink) 75%);
+        box-shadow:0 0 0 18px rgba(214,51,108,.10), 0 0 60px rgba(214,51,108,.35);
+        display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff;
+        transition:transform 4s ease-in-out;
+      }
+      .breathe-orb .b-phase{ font-weight:900; font-size:1.2rem; text-shadow:0 2px 8px rgba(0,0,0,.2); }
+      .breathe-orb .b-count{ font-size:2.6rem; font-weight:900; line-height:1; text-shadow:0 2px 8px rgba(0,0,0,.2); }
+      .breathe-meta{ font-weight:800; color:var(--ink-soft); }
+
+      /* ---------- Toast & burst ---------- */
+      #toast{
+        position:fixed; left:50%; bottom:26px; transform:translate(-50%,90px); z-index:100;
+        background:var(--plum); color:#fff; font-weight:800; padding:13px 24px; border-radius:999px;
+        box-shadow:0 14px 34px rgba(0,0,0,.3); transition:transform .45s cubic-bezier(.34,1.4,.64,1), opacity .3s ease, visibility .3s;
+        max-width:88vw; text-align:center; pointer-events:none;
+        opacity:0; visibility:hidden;
+      }
+      @media (prefers-color-scheme: dark){ #toast{ background:#ffd9e8; color:#67003c; } }
+      #toast.show{ transform:translate(-50%,0); opacity:1; visibility:visible; }
+      .petal-bit{ position:fixed; z-index:99; pointer-events:none; font-size:20px; }
+
+      footer{
+        text-align:center; padding:38px 18px 30px; margin-top:26px;
+      }
+      footer .quote{ font-size:1.12rem; font-weight:800; color:var(--plum); font-style:italic; max-width:620px; margin:0 auto 10px; line-height:1.55; }
+      footer .made{ color:var(--ink-soft); font-weight:700; }
+      footer .heart{ display:inline-block; animation:beat 1.6s ease-in-out infinite; }
+      @keyframes beat{ 0%,100%{ transform:scale(1);} 12%{ transform:scale(1.25);} 24%{ transform:scale(1);} }
+
+      @media (prefers-reduced-motion: reduce){
+        *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
+        .rv{ opacity:1; transform:none; }
+        .petal{ display:none; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="navshell">
+        <div class="brand">HerHealth <span class="tulip">🌷</span></div>
+        <nav aria-label="Main">
+          <button class="navbtn active" data-view="home">🏠 Home</button>
+          <button class="navbtn" data-view="tracker">📅 Tracker</button>
+          <button class="navbtn" data-view="selfcare">🌸 Self-Care</button>
+        </nav>
+      </div>
+    </header>
+
+    <div class="wrap">
+      <main>
+        <!-- ================= HOME ================= -->
+        <section class="view active" id="view-home">
+          <div class="hero">
+            <div class="petals" id="petals" aria-hidden="true"></div>
+            <h1>Welcome to Your Soft Space</h1>
+            <p class="sub">Your smart gentle guide to menstrual wellness. 🌸</p>
+            <svg class="hero-art" viewBox="0 0 300 240" role="img" aria-label="A soft illustration of a tulip, crescent moon and hearts">
+              <circle cx="150" cy="118" r="96" fill="#ffe3ee"/>
+              <circle cx="150" cy="118" r="96" fill="none" stroke="#ffb3cd" stroke-width="3" stroke-dasharray="4 10" stroke-linecap="round"/>
+              <path d="M228 42a26 26 0 1 1-20-39 30 30 0 1 0 20 39z" fill="#ffd166"/>
+              <path d="M58 178c26-14 58-20 92-20s66 6 92 20c-26 12-58 18-92 18s-66-6-92-18z" fill="#b8e6c9"/>
+              <path d="M150 176c0-24-2-44-10-62" fill="none" stroke="#2f9e63" stroke-width="6" stroke-linecap="round"/>
+              <path d="M150 176c1-26 6-46 16-64" fill="none" stroke="#2f9e63" stroke-width="6" stroke-linecap="round"/>
+              <path d="M118 132c-12 2-22-4-26-14 12-2 22 4 26 14z" fill="#57c785"/>
+              <path d="M182 138c12 2 22-4 26-14-12-2-22 4-26 14z" fill="#57c785"/>
+              <g>
+                <path d="M128 66c2 16 10 26 22 30 12-4 20-14 22-30-6 4-12 4-15-2-2 8-5 12-7 12s-5-4-7-12c-3 6-9 6-15 2z" fill="#f06595"/>
+                <path d="M135 92c4 8 9 13 15 15 6-2 11-7 15-15-5 3-10 4-15 4s-10-1-15-4z" fill="#d6336c"/>
+              </g>
+              <path d="M84 84c-5-7-18-4-18 5 0 7 9 11 18 17 9-6 18-10 18-17 0-9-13-12-18-5z" fill="#ff8fab"/>
+              <path d="M222 118c-4-5-13-3-13 4 0 5 7 8 13 12 6-4 13-7 13-12 0-7-9-9-13-4z" fill="#ffa8c5"/>
+              <circle cx="66" cy="140" r="4" fill="#b197fc"/>
+              <circle cx="240" cy="80" r="4" fill="#f06595"/>
+              <path d="M104 44l2.2 5.8L112 52l-5.8 2.2L104 60l-2.2-5.8L96 52l5.8-2.2z" fill="#ffd166"/>
+              <path d="M206 158l1.8 4.6 4.6 1.8-4.6 1.8L206 171l-1.8-4.8-4.6-1.8 4.6-1.8z" fill="#b197fc"/>
+            </svg>
+            <div class="hero-cta">
+              <button class="btn" data-goto="tracker">📅 Track my cycle</button>
+              <button class="btn ghost" data-goto="selfcare">🌸 Self-care corner</button>
+            </div>
+          </div>
+
+          <section class="block rv">
+            <div class="card hoverable">
+              <h2 class="sec-title">What is HerHealth? 💗</h2>
+              <p>HerHealth is your all-in-one menstrual wellness companion — a soft little corner of the internet that helps you understand your body instead of fighting it. It brings together a smart <b>Period Tracker</b> that learns from your logged cycles and predicts what comes next, an <b>interactive dashboard</b> with your cycle ring, calendar and hormone chart, and a cosy <b>self-care tips library</b> covering food, movement, myths and mindful breathing for every phase. No judgement, no scary medical jargon — just gentle guidance, honest information and a reminder that every phase of your cycle has its own kind of strength. 🌷</p>
+            </div>
+          </section>
+
+          <section class="block">
+            <h2 class="sec-title rv">Your cycle, four seasons 🌈</h2>
+            <p class="sec-sub rv">Every month your body moves through four phases — each one deserves its own kind of care.</p>
+            <div class="grid4">
+              <div class="phase-card pc-menstrual rv">
+                <span class="emoji">🌧</span>
+                <h3>Menstrual</h3>
+                <div class="days">Day 1–5</div>
+                <p>Your period is here. Rest, warmth and comfort come first — heat pads, cosy blankets and zero guilt about slowing down.</p>
+              </div>
+              <div class="phase-card pc-follicular rv">
+                <span class="emoji">🌱</span>
+                <h3>Follicular</h3>
+                <div class="days">Day 6–14</div>
+                <p>Energy climbs and your mood lifts as estrogen rises. A lovely time to start new things, learn and make plans.</p>
+              </div>
+              <div class="phase-card pc-ovulation rv">
+                <span class="emoji">💕</span>
+                <h3>Ovulation</h3>
+                <div class="days">Day 14–17</div>
+                <p>Peak glow time! Confidence, energy and social sparkle are at their highest — shine bright and say yes to life.</p>
+              </div>
+              <div class="phase-card pc-luteal rv">
+                <span class="emoji">🌙</span>
+                <h3>Luteal</h3>
+                <div class="days">Day 18–28</div>
+                <p>Time to slow down and reflect. Cravings and tender feelings are normal — be extra gentle with yourself.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="block grid2">
+            <div class="card hoverable rv">
+              <h2 class="sec-title" style="font-size:1.4rem;">Your cycle at a glance 🔮</h2>
+              <div id="glanceBody">
+                <p style="font-weight:600;">You haven't logged a cycle yet — and that's okay! 💌 Head to the Tracker, add your last period, and this card will light up with your current phase, cycle day and next predicted period.</p>
+                <button class="btn small" data-goto="tracker">Log my first cycle →</button>
+              </div>
+            </div>
+            <div class="card hoverable rv">
+              <h2 class="sec-title" style="font-size:1.4rem;">Tip of the day 🌼</h2>
+              <p class="tip-text fade-swap" id="tipText"></p>
+              <button class="btn small ghost" id="tipBtn">✨ Show me another</button>
+            </div>
+          </section>
+
+          <section class="block">
+            <h2 class="sec-title rv">Period News &amp; Updates 📰</h2>
+            <p class="sec-sub rv">Trusted reads to keep you informed and empowered.</p>
+            <div class="news-grid">
+              <a class="news-card rv" href="https://www.business-standard.com/health/menstrual-hygiene-day-2025-breaking-taboos-building-period-friendly-world-125052800617_1.html?1752595746" target="_blank" rel="noopener">
+                <span class="n-emoji">🩸</span>
+                <span><h3>Menstrual Hygiene Day 2025</h3><p>Why periods must never limit access or dignity — breaking taboos and building a period-friendly world.</p><span class="src">Business Standard ↗</span></span>
+              </a>
+              <a class="news-card rv" href="https://www.unicef.org/wash/menstrual-hygiene" target="_blank" rel="noopener">
+                <span class="n-emoji">🧼</span>
+                <span><h3>Menstrual hygiene</h3><p>How UNICEF helps girls and women manage their periods safely, hygienically and with dignity, everywhere.</p><span class="src">UNICEF ↗</span></span>
+              </a>
+              <a class="news-card rv" href="https://www.bbc.co.uk/bitesize/guides/zcnp7p3/revision/2" target="_blank" rel="noopener">
+                <span class="n-emoji">🔬</span>
+                <span><h3>Changes during the menstrual cycle</h3><p>A clear, friendly explainer on hormones and what changes in your body across the cycle.</p><span class="src">BBC Bitesize ↗</span></span>
+              </a>
+              <a class="news-card rv" href="https://www.unwomen.org/en/articles/explainer/period-poverty-why-millions-of-girls-and-women-cannot-afford-their-periods" target="_blank" rel="noopener">
+                <span class="n-emoji">🎀</span>
+                <span><h3>Period poverty</h3><p>Why millions of girls and women cannot afford their periods — and what can be done about it.</p><span class="src">UN Women ↗</span></span>
+              </a>
+            </div>
+          </section>
+        </section>
+
+        <!-- ================= TRACKER ================= -->
+        <section class="view" id="view-tracker">
+          <section class="block" style="margin-top:22px;">
+            <div class="tracker-top">
+              <div class="card rv">
+                <h2 class="sec-title" style="font-size:1.4rem;">Log a cycle 🩸</h2>
+                <p class="sec-sub" style="margin-bottom:2px;">Add your period's start and end dates — HerHealth will learn your rhythm and predict what's next.</p>
+                <form class="log-form" id="cycleForm" novalidate>
+                  <label for="startDate">Period start date</label>
+                  <input type="date" id="startDate" aria-label="Period start date" required />
+                  <label for="endDate">Period end date</label>
+                  <input type="date" id="endDate" aria-label="Period end date" required />
+                  <p class="form-err" id="formErr" role="alert"></p>
+                  <button type="submit" class="btn" id="saveCycleBtn" style="width:100%;">💾 Save cycle</button>
+                </form>
+                <div class="form-summary" id="formSummary"></div>
+              </div>
+
+              <div class="card rv">
+                <h2 class="sec-title" style="font-size:1.4rem;">Your cycle ring 🌸</h2>
+                <div class="ring-wrap" style="margin-top:10px;">
+                  <div class="ring-box">
+                    <svg width="190" height="190" viewBox="0 0 190 190">
+                      <defs>
+                        <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stop-color="#f06595"/>
+                          <stop offset="100%" stop-color="#b197fc"/>
+                        </linearGradient>
+                      </defs>
+                      <circle class="ring-bg" cx="95" cy="95" r="82" fill="none" stroke-width="13"/>
+                      <circle class="ring-fg" id="ringFg" cx="95" cy="95" r="82" fill="none" stroke-width="13"/>
+                    </svg>
+                    <div class="ring-center">
+                      <div class="daynum" id="ringDay">—</div>
+                      <div class="phasename" id="ringPhase">No cycle yet</div>
+                      <div class="ofdays" id="ringOf"></div>
+                    </div>
+                  </div>
+                  <div class="ring-side">
+                    <div class="count" id="ringCount">Log a cycle<br/><small>to see your countdown 💌</small></div>
+                    <div class="mini-stats">
+                      <span class="ms">🗓 Next period: <b id="msNext">—</b></span>
+                      <span class="ms">🔁 Avg cycle: <b id="msAvgCycle">—</b></span>
+                      <span class="ms">🩸 Avg period: <b id="msAvgPeriod">—</b></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="block">
+            <div class="stats-row">
+              <div class="card stat-card rv"><span class="emoji">🗂️</span><div class="num" data-count id="statCycles">0</div><div class="lbl">Cycles logged</div></div>
+              <div class="card stat-card rv"><span class="emoji">🔁</span><div class="num" data-count id="statAvgCycle">0</div><div class="lbl">Average cycle days</div></div>
+              <div class="card stat-card rv"><span class="emoji">🩸</span><div class="num" data-count id="statAvgPeriod">0</div><div class="lbl">Average period days</div></div>
+              <div class="card stat-card rv"><span class="emoji">📝</span><div class="num" data-count id="statDaysLogged">0</div><div class="lbl">Days logged</div></div>
+            </div>
+          </section>
+
+          <section class="block">
+            <div class="side-row">
+            <div class="forecast-card rv" id="forecastSection">
+              <div class="forecast-head">
+                <h2 class="sec-title" style="font-size:1.45rem;">Today's forecast 🔮</h2>
+                <span class="forecast-badge">Predicted · from your graph</span>
+              </div>
+              <p class="forecast-date" id="forecastDate">Log a cycle and HerHealth will predict your mood &amp; symptoms automatically — no extra logging needed.</p>
+              <div id="forecastBody">
+                <p style="font-weight:700;margin:12px 0 0;">Once you save a period date above, this panel reads your hormone &amp; mood curve for that cycle day and forecasts how you'll likely feel. Tap any day on the calendar below and the forecast updates to that day. 💗</p>
+              </div>
+              <div id="forecastDetails" style="display:none;">
+                <div class="forecast-main">
+                  <div class="forecast-emoji" id="forecastEmoji">😊</div>
+                  <div style="flex:1;min-width:220px;">
+                    <div class="forecast-mood" id="forecastMoodLabel">Good &amp; steady</div>
+                    <div class="forecast-score" id="forecastScore">Predicted mood score: — / 10</div>
+                    <div class="score-bar" aria-hidden="true"><div class="score-fill" id="forecastScoreBar" style="width:0%;"></div></div>
+                    <div class="forecast-date" id="forecastPhase" style="margin-top:8px;"></div>
+                  </div>
+                </div>
+                <p class="forecast-label">Likely symptoms on this day</p>
+                <div class="symptom-chips" id="forecastSymptoms"></div>
+                <p class="forecast-why" id="forecastWhy"></p>
+                <p style="font-weight:700;color:var(--ink-soft);font-size:.88rem;margin:10px 0 0;">This is a prediction from your cycle pattern and the chart beside it — tap any day on the calendar below to see its forecast.</p>
+              </div>
+            </div>
+            <div class="card chart-hero-card rv">
+              <h2 class="sec-title" style="font-size:1.55rem;">Hormones &amp; mood 📈</h2>
+              <p class="sec-sub">Your big cycle graph — the forecast beside it is read straight from these curves. How estrogen, progesterone and mood rise and fall across your cycle.</p>
+              <div class="chart-legend">
+                <span><i style="background:#f06595;"></i>Estrogen</span>
+                <span><i style="background:#9775fa;"></i>Progesterone</span>
+                <span><i style="background:#ffa94d;"></i>Mood</span>
+              </div>
+              <div id="chartBox"></div>
+            </div>
+            </div>
+          </section>
+
+          <section class="block">
+            <div class="side-row">
+            <div class="card rv">
+              <div class="cal-head">
+                <button class="cal-nav" id="calPrev" aria-label="Previous month">‹</button>
+                <h3 id="calTitle">Calendar</h3>
+                <button class="cal-nav" id="calNext" aria-label="Next month">›</button>
+              </div>
+              <div class="cal-grid" id="calDow"></div>
+              <div class="cal-grid" id="calGrid"></div>
+              <div class="legend">
+                <span><i class="swatch sw-period"></i> Period</span>
+                <span><i class="swatch sw-predicted"></i> Predicted</span>
+                <span><i class="swatch sw-fertile"></i> Fertile window</span>
+                <span><i class="swatch sw-ovulation"></i> Ovulation</span>
+                <span><i class="swatch sw-today"></i> Today</span>
+                <span><i class="swatch sw-dot"></i> Day logged</span>
+              </div>
+
+              <p style="font-weight:700;color:var(--ink-soft);margin:16px 0 0;">Tap any day to see its forecast in the panel above 🔮</p>
+            </div>
+            <div class="card rv">
+              <h2 class="sec-title" style="font-size:1.4rem;">Cycle history 📜</h2>
+              <div id="historyList" style="margin-top:14px;"></div>
+            </div>
+            </div>
+          </section>
+        </section>
+
+        <!-- ================= SELF-CARE ================= -->
+        <section class="view" id="view-selfcare">
+          <div class="affirm fade-swap" id="affirmBanner">You are enough, exactly as you are. 💗</div>
+
+          <div class="sc-layout">
+            <div class="sc-tabs" role="tablist" aria-label="Self-care topics">
+              <button class="sc-tab active" data-tab="phases">🌈 Cycle Phases</button>
+              <button class="sc-tab" data-tab="nutrition">🥗 Nutrition</button>
+              <button class="sc-tab" data-tab="workout">🧘 Workout</button>
+              <button class="sc-tab" data-tab="teen">🎒 Teen Guide</button>
+              <button class="sc-tab" data-tab="myths">🔮 Myths</button>
+              <button class="sc-tab" data-tab="breathe">🫧 Breathe</button>
+            </div>
+
+            <div class="sc-scroll" id="scScroll" tabindex="0" aria-label="Self-care content — scroll to explore all tips">
+              <div class="sc-panel active card" data-panel="phases">
+                <h2 class="sec-title" style="font-size:1.45rem;">Care for every phase 🌈</h2>
+                <p class="sec-sub">Your needs change through the month — here's how to honour each season.</p>
+                <div class="mini-phase">
+                  <div class="phase-card pc-menstrual">
+                    <span class="emoji">🌧</span><h3>Menstrual · Day 1–5</h3>
+                    <p>Rest is productive now. Curl up with a hot water bottle, sip warm drinks like ginger or chamomile tea, take slow walks if you feel like it, and let yourself cancel plans without guilt. Warmth soothes cramps — warm baths and heat pads are your best friends.</p>
+                  </div>
+                  <div class="phase-card pc-follicular">
+                    <span class="emoji">🌱</span><h3>Follicular · Day 6–14</h3>
+                    <p>Fresh energy is blooming! Fill your plate with fresh, colourful food, try new recipes, start that project you've been dreaming about and say yes to social plans. Your body is rebuilding — protein and iron help it along.</p>
+                  </div>
+                  <div class="phase-card pc-ovulation">
+                    <span class="emoji">💕</span><h3>Ovulation · Day 14–17</h3>
+                    <p>You're glowing — confidence peaks around ovulation. Antioxidant-rich foods like berries, leafy greens and nuts support this sparkly phase. Schedule the presentation, the date, the photoshoot — this is your main-character moment.</p>
+                  </div>
+                  <div class="phase-card pc-luteal">
+                    <span class="emoji">🌙</span><h3>Luteal · Day 18–28</h3>
+                    <p>Slow down and reflect. Comfort foods are welcome here (yes, the chocolate counts), journaling helps untangle busy feelings, and hydration keeps bloating and headaches away. Early nights and soft routines will carry you through.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sc-panel card" data-panel="nutrition">
+                <h2 class="sec-title" style="font-size:1.45rem;">Nourish your cycle 🥗</h2>
+                <p class="sec-sub">Small, kind food choices that make a real difference.</p>
+                <ul class="tip-list">
+                  <li>🩸 <b>Iron is your period hero.</b> You lose iron when you bleed, so reach for spinach, lentils, beans, dates and raisins. Pair plant iron with vitamin C (a squeeze of lemon, an orange) so your body absorbs more of it.</li>
+                  <li>💧 <b>Hydration, always.</b> Aim for 6–8 glasses of water a day. Staying hydrated eases bloating, headaches and fatigue — and warm water or herbal teas can feel extra soothing on crampy days.</li>
+                  <li>🌰 <b>Magnesium for cramps &amp; calm.</b> Bananas, nuts, seeds, dark chocolate and whole grains are rich in magnesium, which helps relax muscles and steady your mood.</li>
+                  <li>🥑 <b>Good fats, happy hormones.</b> Your hormones are built from fats — avocados, nuts, seeds, ghee and fatty fish give your body the raw materials it needs.</li>
+                  <li>🍓 <b>Eat the rainbow in follicular &amp; ovulation phases</b> when energy is high, and lean into warm, grounding comfort foods in your luteal and menstrual phases.</li>
+                  <li>☕ <b>Gentle swaps:</b> too much caffeine and salt can worsen cramps, bloating and tender breasts — no need to ban them, just notice how you feel and adjust with kindness.</li>
+                </ul>
+              </div>
+
+              <div class="sc-panel card" data-panel="workout">
+                <h2 class="sec-title" style="font-size:1.45rem;">Move with your cycle 🧘</h2>
+                <p class="sec-sub">There's no single "right" workout — there's the right workout for today's phase.</p>
+                <ul class="tip-list">
+                  <li>🌧 <b>Menstrual (Day 1–5):</b> Gentle is powerful. Restorative yoga, slow stretching, a soft walk, or full rest days. Movement can ease cramps — but only the kind that feels like a hug, not a punishment.</li>
+                  <li>🌱 <b>Follicular (Day 6–14):</b> Energy is rising — build strength, try new classes, dance, hike, lift a little heavier. Your body recovers faster in this phase, so it's a great time to challenge yourself.</li>
+                  <li>💕 <b>Ovulation (Day 14–17):</b> Peak power! High-energy workouts, group classes, running, HIIT — you may feel your strongest and most unstoppable now. Channel the main-character energy. ✨</li>
+                  <li>🌙 <b>Luteal (Day 18–28):</b> Wind down gradually — pilates, swimming, cycling at an easy pace, long walks and mobility work. In the last few days, trade intensity for softness and sleep.</li>
+                  <li>💗 <b>Golden rule:</b> tired is information, not failure. Listening to your body <i>is</i> the training plan.</li>
+                </ul>
+              </div>
+
+              <div class="sc-panel card" data-panel="teen">
+                <h2 class="sec-title" style="font-size:1.45rem;">Your first period guide 🎒</h2>
+                <p class="sec-sub">New to periods? Welcome — you're in safe, friendly company. 💗</p>
+                <ul class="tip-list">
+                  <li>🌸 <b>What is a period?</b> About once a month, your uterus sheds its lining — that's the blood you see. It's a healthy, normal sign that your body is growing up and working exactly as it should. Most girls get their first period between ages 9 and 15.</li>
+                  <li>👀 <b>Signs it might be coming:</b> white or clear discharge, breast tenderness, mild tummy cramps, moodiness, or a few spots. Your first one might be light, brownish, and a surprise — that's completely normal.</li>
+                  <li>🎒 <b>Keep in your bag:</b> 2–3 pads in a small pouch, a spare pair of underwear, a small plastic bag for used products, tissues or wet wipes, and a little snack. Being prepared = feeling calm.</li>
+                  <li>🩸 <b>What to do when it starts:</b> Put on a pad (sticky side on your underwear, wings folded underneath), change it every 4–6 hours, wash your hands before and after, and wrap used pads before throwing them in a bin — never flush them. If it starts at school, tell a teacher or friend — every woman around you has been exactly here. 💕</li>
+                  <li>📅 <b>Good to know:</b> early cycles are often irregular — that's your body learning. Tracking them (hello, Tracker tab!) helps you spot your own pattern. See a doctor if periods are extremely painful, very heavy, or stop for months.</li>
+                </ul>
+              </div>
+
+              <div class="sc-panel" data-panel="myths">
+                <div class="card" style="margin-bottom:16px;">
+                  <h2 class="sec-title" style="font-size:1.45rem;">Myth busters 🔮</h2>
+                  <p class="sec-sub" style="margin-bottom:0;">Tap a card to flip it over and reveal the real fact. ✨</p>
+                </div>
+                <div class="flip-grid" id="mythGrid"></div>
+              </div>
+
+              <div class="sc-panel card" data-panel="breathe">
+                <h2 class="sec-title" style="font-size:1.45rem;">Breathe with me 🫧</h2>
+                <p class="sec-sub">A calming 4-4-4 breathing exercise — breathe in for 4, hold for 4, out for 4. Lovely for cramps, stress and sleepy evenings.</p>
+                <div class="breathe-stage">
+                  <div class="breathe-orb" id="breatheOrb">
+                    <div class="b-phase" id="breathePhase">Ready?</div>
+                    <div class="b-count" id="breatheCount">🌸</div>
+                  </div>
+                  <button class="btn" id="breatheBtn">▶ Start breathing</button>
+                  <div class="breathe-meta" id="breatheMeta">One full round takes 12 gentle seconds.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p style="font-weight:700;color:var(--ink-soft);text-align:center;margin:14px 0 0;">Scroll inside the pink panel to explore everything — use the side tabs to jump between topics. 🌸</p>
+          <button class="sc-top-btn" id="scTopBtn" aria-label="Back to top of Self-Care">↑ Back to top</button>
+        </section>
+      </main>
+
+      <footer>
+        <p class="quote">"Your body isn't a problem to fix — it's a story to listen to."</p>
+        <p class="made">Made with <span class="heart">💗</span> by Nidhi</p>
+      </footer>
     </div>
-    <div class="tip-card reveal d1">
-      <h3>💡 Tip of the day</h3>
-      <p id="tip-text"></p>
-      <button type="button" id="tip-btn">Show me another →</button>
-    </div>
-  </div>
 
-  <h2 class="section-title reveal">Period News & Updates</h2>
-  <div class="news-grid">
-  <a href="https://www.business-standard.com/health/menstrual-hygiene-day-2025-breaking-taboos-building-period-friendly-world-125052800617_1.html" target="_blank" class="news-card reveal">
-    <img src="https://bsmedia.business-standard.com/_media/bs/img/article/2025-05/28/full/1748410578-2872.jpeg?im=FeatureCrop,size=(826,465)" alt="Business Period News">
-    <div class="news-title">
-      Menstrual Hygiene Day 2025 ➜
-    </div>
-  </a>
+    <div id="toast" role="status" aria-live="polite"></div>
 
-  <a href="https://www.unicef.org/wash/menstrual-hygiene" target="_blank" class="news-card reveal d1">
-    <img src="https://www.unicef.org/sites/default/files/styles/media_large_image/public/UN0215355.JPG.webp?itok=2qyvnRge" alt="menstrual-hygiene">
-    <div class="news-title">
-      Menstrual hygiene ➜
-    </div>
-  </a>
+    <script>
+    (function(){
+      "use strict";
+      var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var $ = function(id){ return document.getElementById(id); };
 
-  <a href="https://www.bbc.co.uk/bitesize/articles/zvwb3j6#zm33f82" target="_blank" class="news-card reveal d2">
-    <img src="https://bam.files.bbci.co.uk/bam/live/content/ztqthyc/large" alt="bbc Menstrual cycle change">
-    <div class="news-title">
-      Change during menstrual cycle ➜
-    </div>
-  </a>
+      /* ---------- date helpers (local, string-based) ---------- */
+      function p2(n){ return String(n).padStart(2,"0"); }
+      function fmt(d){ return d.getFullYear()+"-"+p2(d.getMonth()+1)+"-"+p2(d.getDate()); }
+      function parse(s){ var p=s.split("-"); return new Date(+p[0], +p[1]-1, +p[2]); }
+      function addDays(s,n){ var d=parse(s); d.setDate(d.getDate()+n); return fmt(d); }
+      function diffDays(a,b){ return Math.round((parse(a)-parse(b))/86400000); }
+      function pretty(s, opts){
+        return parse(s).toLocaleDateString("en-GB", opts || {day:"numeric", month:"short", year:"numeric"});
+      }
+      var TODAY = fmt(new Date());
 
-  <a href="https://www.unwomen.org/en/news-stories/explainer/2024/05/period-poverty-why-millions-of-girls-and-women-cannot-afford-their-periods" target="_blank" class="news-card reveal d3">
-    <img src="https://www.unwomen.org/sites/default/files/styles/webp_only/public/2024-05/india_unicef_photo_menstrualhygieneday_un0593971_1200x800.jpg.webp?itok=1Al-nhas" alt="Unwomen period poverty">
-    <div class="news-title">
-      Period poverty ➜
-    </div>
-  </a>
-  </div>
+      /* ---------- storage ---------- */
+      function load(key, fallback){
+        try{ var v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+        catch(e){ return fallback; }
+      }
+      function save(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){} }
+      var cycles = load("herhealth_cycles", []);   // [{id,start,end}]
+      var dayLogs = load("herhealth_daylogs", {}); // {"YYYY-MM-DD":{mood,flow,symptoms:[]}}
+      cycles.sort(function(a,b){ return a.start < b.start ? -1 : 1; });
 
-  <footer>
-    <p>Made with 💗 by Nidhi</p>
-    <p><blockquote>"Your body isn't a problem to fix — it's a story to listen to."</blockquote>
-</p>
-  </footer>
+      /* ---------- cycle maths ---------- */
+      function computeStats(){
+        if(!cycles.length) return null;
+        var lengths = cycles.map(function(c){ return diffDays(c.end, c.start) + 1; });
+        var avgPeriod = lengths.reduce(function(a,b){return a+b;},0) / lengths.length;
+        var gaps = [];
+        for(var i=1;i<cycles.length;i++) gaps.push(diffDays(cycles[i].start, cycles[i-1].start));
+        var avgCycle = gaps.length ? gaps.reduce(function(a,b){return a+b;},0)/gaps.length : 28;
+        avgCycle = Math.round(avgCycle); avgPeriod = Math.round(avgPeriod*10)/10;
+        var last = cycles[cycles.length-1];
+        var nextPeriod = addDays(last.start, avgCycle);
+        var ovulation = addDays(nextPeriod, -14);
+        var fertileStart = addDays(ovulation, -5), fertileEnd = addDays(ovulation, 1);
+        var cycleDay = null, phase = null;
+        if(TODAY >= last.start){
+          cycleDay = diffDays(TODAY, last.start) + 1;
+          var ovDay = avgCycle - 14;
+          if(cycleDay <= Math.round(avgPeriod)) phase = "Menstrual 🌧";
+          else if(cycleDay < ovDay - 1) phase = "Follicular 🌱";
+          else if(cycleDay <= ovDay + 1) phase = "Ovulation 💕";
+          else phase = "Luteal 🌙";
+        }
+        return {
+          count: cycles.length, avgCycle: avgCycle, avgPeriod: avgPeriod,
+          lastStart: last.start, nextPeriod: nextPeriod, ovulation: ovulation,
+          fertileStart: fertileStart, fertileEnd: fertileEnd,
+          countdown: diffDays(nextPeriod, TODAY),
+          cycleDay: cycleDay, phase: phase
+        };
+      }
 
-  <script src="script.js"></script>
-</body>
+      function classify(ds){
+        var out = { period:false, predicted:false, fertile:false, ovulation:false };
+        if(!cycles.length) return out;
+        for(var i=0;i<cycles.length;i++){
+          if(ds >= cycles[i].start && ds <= cycles[i].end) out.period = true;
+        }
+        var st = computeStats();
+        var avgPeriodR = Math.max(1, Math.round(st.avgPeriod));
+        // walk forward (and a little back) in avgCycle steps from the last start
+        for(var k=-3;k<=14;k++){
+          var ps = addDays(st.lastStart, k*st.avgCycle);
+          var pe = addDays(ps, avgPeriodR-1);
+          if(ds >= ps && ds <= pe && !out.period) out.predicted = true;
+          var ov = addDays(ps, st.avgCycle-14);
+          if(ds === ov) out.ovulation = true;
+          if(ds >= addDays(ov,-5) && ds <= addDays(ov,1)) out.fertile = true;
+        }
+        if(out.period){ out.predicted = false; }
+        return out;
+      }
+
+      /* ---------- auto forecast from the hormone/mood graph ---------- */
+      function gaussF(x, c, w){ var t = (x - c) / w; return Math.exp(-0.5 * t * t); }
+      function hormoneModel(day, N){
+        var ov = N - 14;
+        var e = 16 + 62 * gaussF(day, ov, 2.4) + 15 * gaussF(day, ov + 8, 3.4);
+        var p = 7 + 68 * gaussF(day, ov + 7, 3.8) + 8 * gaussF(day, ov, 2);
+        var m = 52 + 26 * gaussF(day, ov, 3.2) - 22 * gaussF(day, N - 0.5, 2.1) - 16 * gaussF(day, 2, 1.7);
+        e = Math.min(e, 97); p = Math.min(p, 97); m = Math.max(6, Math.min(m, 96));
+        return { estrogen: Math.round(e), progesterone: Math.round(p), moodValue: m, moodScore: Math.max(1, Math.min(10, Math.round(m / 10))), ovulationDay: ov };
+      }
+      function moodInfo(score){
+        if(score >= 8) return { label: "Bright & energetic", emoji: "😍" };
+        if(score >= 6) return { label: "Good & steady", emoji: "😊" };
+        if(score >= 4) return { label: "Low-key", emoji: "😐" };
+        if(score >= 2) return { label: "Tired / sensitive", emoji: "😔" };
+        return { label: "Very low", emoji: "😣" };
+      }
+      function getForecast(ds){
+        var st = computeStats();
+        if(!st || !ds) return null;
+        var N = st.avgCycle;
+        var offset = diffDays(ds, st.lastStart);
+        var cycleDay = ((offset % N) + N) % N + 1;
+        var ovDay = N - 14;
+        var avgP = Math.max(1, Math.round(st.avgPeriod));
+        var phase, symptoms, why;
+        var model = hormoneModel(cycleDay, N);
+        if(cycleDay <= avgP){
+          phase = "Menstrual 🌧";
+          symptoms = ["Cramps", "Fatigue", "Back pain", "Low energy", "Headache"];
+          why = "Estrogen and progesterone are both low on Day " + cycleDay + " of your cycle (see the start of the graph), so tiredness and cramps are most likely today — warmth and rest usually help most.";
+        } else if(cycleDay >= N - 4){
+          phase = "Late Luteal 🌙 · period approaching";
+          symptoms = ["Bloating", "Mood swings", "Cravings", "Headache", "Acne", "Fatigue"];
+          why = "Progesterone is falling from its luteal peak and the mood curve dips just before your period on the graph, so bloating, cravings and sensitive moods are common in these last days.";
+        } else if(cycleDay >= ovDay - 1 && cycleDay <= ovDay + 1){
+          phase = "Ovulation 💕";
+          symptoms = ["High energy", "Mild cramps", "Glow & confidence", "Light bloating"];
+          why = "Estrogen peaks at ovulation on the graph and the mood curve is at its highest, so energy and confidence usually peak today — with only mild cramps for some people.";
+        } else if(cycleDay < ovDay - 1){
+          phase = "Follicular 🌱";
+          symptoms = ["Rising energy", "Few symptoms", "Clearer skin", "Lighter mood"];
+          why = "Estrogen is rising and progesterone is still low today (the climbing part of the graph), so energy and mood usually lift and symptoms tend to be few.";
+        } else {
+          phase = "Luteal 🌙";
+          symptoms = ["Bloating", "Fatigue", "Cravings", "Mood swings", "Tender breasts"];
+          why = "Progesterone is high in the luteal phase on the graph while estrogen settles, so you may feel slower, hungrier and more inward — gentle movement and early nights help.";
+        }
+        var mi = moodInfo(model.moodScore);
+        return { date: ds, cycleDay: cycleDay, cycleLength: N, phase: phase, symptoms: symptoms, why: why, moodScore: model.moodScore, moodLabel: mi.label, moodEmoji: mi.emoji, estrogen: model.estrogen, progesterone: model.progesterone };
+      }
+      function renderForecast(ds){
+        var dateEl = $("forecastDate"), bodyEl = $("forecastBody"), detEl = $("forecastDetails");
+        if(!dateEl || !detEl) return;
+        var fc = getForecast(ds || TODAY);
+        var titleEl = document.querySelector("#forecastSection .sec-title");
+        if(!fc){
+          if(titleEl) titleEl.textContent = "Today's forecast 🔮";
+          dateEl.textContent = "Log a cycle and HerHealth will predict your mood & symptoms automatically — no extra logging needed.";
+          if(bodyEl) bodyEl.style.display = "block";
+          detEl.style.display = "none";
+          return;
+        }
+        var isToday = fc.date === TODAY;
+        if(titleEl) titleEl.textContent = isToday ? "Today's forecast 🔮" : "Forecast for this day 🔮";
+        dateEl.textContent = (isToday ? "Today · " : "") + pretty(fc.date, { weekday: "long", day: "numeric", month: "long", year: "numeric" }) + " · Cycle Day " + fc.cycleDay + " of ~" + fc.cycleLength;
+        if(bodyEl) bodyEl.style.display = "none";
+        detEl.style.display = "block";
+        $("forecastEmoji").textContent = fc.moodEmoji;
+        $("forecastMoodLabel").textContent = fc.moodLabel + " " + fc.moodEmoji;
+        $("forecastScore").textContent = "Predicted mood score: " + fc.moodScore + " / 10 · from the mood curve on your graph";
+        $("forecastScoreBar").style.width = (fc.moodScore * 10) + "%";
+        $("forecastPhase").textContent = "Phase: " + fc.phase + " · Estrogen " + fc.estrogen + "% · Progesterone " + fc.progesterone + "% on the chart";
+        $("forecastSymptoms").innerHTML = fc.symptoms.map(function(s){ return '<span class="s-chip">' + s + '</span>'; }).join("");
+        $("forecastWhy").textContent = "Why: " + fc.why;
+      }
+
+      /* ---------- toast & petal burst ---------- */
+      var toastTimer = null;
+      function toast(msg){
+        var t = $("toast"); t.textContent = msg; t.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 3200);
+      }
+      var burstEmojis = ["🌸","🌷","💗","✨","🩷","🌺"];
+      function petalBurst(x, y){
+        if(reduced) return;
+        for(var i=0;i<14;i++){
+          var s = document.createElement("span");
+          s.className = "petal-bit";
+          s.textContent = burstEmojis[Math.floor(Math.random()*burstEmojis.length)];
+          s.style.left = x+"px"; s.style.top = y+"px";
+          document.body.appendChild(s);
+          var ang = Math.random()*Math.PI*2, dist = 60+Math.random()*110;
+          var dx = Math.cos(ang)*dist, dy = Math.sin(ang)*dist - 40;
+          s.animate([
+            { transform:"translate(-50%,-50%) scale(.4) rotate(0deg)", opacity:1 },
+            { transform:"translate(calc(-50% + "+dx+"px), calc(-50% + "+(dy+70)+"px)) scale(1.15) rotate("+(Math.random()*260-130)+"deg)", opacity:0 }
+          ], { duration: 950+Math.random()*450, easing:"cubic-bezier(.22,.9,.3,1)" }).onfinish = (function(el){ return function(){ el.remove(); }; })(s);
+        }
+      }
+      function burstFromEl(el){
+        var r = el.getBoundingClientRect();
+        petalBurst(r.left + r.width/2, r.top + r.height/2);
+      }
+
+      /* ---------- count-up ---------- */
+      function countUp(el, target){
+        if(!el) return;
+        if(reduced){ el.textContent = target; return; }
+        var start = null, dur = 1000;
+        function step(ts){
+          if(!start) start = ts;
+          var p = Math.min((ts-start)/dur, 1);
+          var eased = 1 - Math.pow(1-p, 3);
+          el.textContent = Math.round(target * eased);
+          if(p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+
+      /* ---------- view switching ---------- */
+      var chartDrawn = false;
+      function showView(name){
+        document.querySelectorAll(".view").forEach(function(v){ v.classList.remove("active"); });
+        $("view-"+name).classList.add("active");
+        document.querySelectorAll(".navbtn").forEach(function(b){
+          b.classList.toggle("active", b.getAttribute("data-view") === name);
+        });
+        window.scrollTo({ top:0, behavior: reduced ? "auto" : "smooth" });
+        if(name === "tracker"){
+          refreshTracker(true);
+          if(!chartDrawn){ drawChart(); chartDrawn = true; }
+        }
+        observeReveals();
+      }
+      document.querySelectorAll(".navbtn").forEach(function(b){
+        b.addEventListener("click", function(){ showView(b.getAttribute("data-view")); });
+      });
+      document.querySelectorAll("[data-goto]").forEach(function(b){
+        b.addEventListener("click", function(){ showView(b.getAttribute("data-goto")); });
+      });
+
+      /* ---------- reveal on scroll ---------- */
+      var io = null;
+      function revealNear(){
+        var vh = window.innerHeight || 900;
+        document.querySelectorAll(".view.active .rv:not(.on)").forEach(function(el){
+          var r = el.getBoundingClientRect();
+          if(r.top < vh + 240 && r.bottom > -240) el.classList.add("on");
+        });
+      }
+      var revealTick = false;
+      function onScrollReveal(){
+        if(revealTick) return;
+        revealTick = true;
+        requestAnimationFrame(function(){ revealTick = false; revealNear(); });
+      }
+      window.addEventListener("scroll", onScrollReveal, { passive:true });
+      window.addEventListener("resize", onScrollReveal);
+      function observeReveals(){
+        if(reduced || !("IntersectionObserver" in window)){
+          document.querySelectorAll(".rv").forEach(function(el){ el.classList.add("on"); });
+          return;
+        }
+        if(!io){
+          io = new IntersectionObserver(function(entries){
+            entries.forEach(function(en){
+              if(en.isIntersecting){ en.target.classList.add("on"); io.unobserve(en.target); }
+            });
+          }, { threshold: .1, rootMargin: "0px 0px 120px 0px" });
+        }
+        document.querySelectorAll(".rv:not(.on)").forEach(function(el, i){
+          el.style.transitionDelay = ((i % 4) * 70) + "ms";
+          io.observe(el);
+        });
+        revealNear();
+        // Failsafe: nothing stays hidden for long, whatever the scroll does.
+        setTimeout(revealNear, 900);
+        setTimeout(function(){
+          document.querySelectorAll(".view.active .rv").forEach(function(el){ el.classList.add("on"); });
+        }, 2600);
+      }
+
+      /* ---------- hero petals ---------- */
+      (function petals(){
+        if(reduced) return;
+        var box = $("petals"), emojis = ["🌸","🌷","💗","✨"];
+        for(var i=0;i<16;i++){
+          var s = document.createElement("span");
+          s.className = "petal";
+          s.textContent = emojis[i % emojis.length];
+          s.style.left = (Math.random()*86) + "%";
+          s.style.fontSize = (15 + Math.random()*18) + "px";
+          s.style.setProperty("--sway", (14 + Math.random()*30) + "px");
+          s.style.animationDuration = (9 + Math.random()*9) + "s";
+          s.style.animationDelay = (-Math.random()*14) + "s";
+          box.appendChild(s);
+        }
+      })();
+
+      /* ---------- tips ---------- */
+      var tips = [
+        "💧 Sip water through the day — hydration eases bloating, headaches and tired skin.",
+        "🩸 On heavy days, pair iron-rich foods like spinach or lentils with vitamin C to absorb more iron.",
+        "🌙 Honour the luteal slow-down: swap one intense workout for a long, gentle walk.",
+        "🍫 A little dark chocolate is magnesium-rich — it can help cramps AND mood. Enjoy it guilt-free.",
+        "🧦 Warm feet, warm body: cosy socks and a hot water bottle can genuinely soothe period pain.",
+        "📵 Ovulation energy is precious — spend it on people and projects that light you up.",
+        "🌿 Ginger tea is a natural anti-inflammatory — lovely for crampy, achy days.",
+        "😴 Your body does deep repair in the follicular phase — protect your sleep and watch ideas bloom.",
+        "🧘 Five slow breaths can lower stress hormones. Try the Breathe tab in Self-Care!",
+        "💗 Track how you feel, not just when you bleed — patterns in mood are data too."
+      ];
+      var dayIdx = Math.floor((Date.now() - new Date(new Date().getFullYear(),0,0)) / 86400000);
+      var tipIdx = dayIdx % tips.length;
+      $("tipText").textContent = tips[tipIdx];
+      $("tipBtn").addEventListener("click", function(){
+        var el = $("tipText");
+        el.classList.add("out");
+        setTimeout(function(){
+          var next = tipIdx;
+          while(next === tipIdx) next = Math.floor(Math.random()*tips.length);
+          tipIdx = next;
+          el.textContent = tips[tipIdx];
+          el.classList.remove("out");
+        }, reduced ? 0 : 360);
+      });
+
+      /* ---------- home glance ---------- */
+      function renderGlance(){
+        var st = computeStats(), box = $("glanceBody");
+        if(!st || !st.cycleDay){
+          box.innerHTML = '<p style="font-weight:600;">You haven\'t logged a cycle yet — and that\'s okay! 💌 Head to the Tracker, add your last period, and this card will light up with your current phase, cycle day and next predicted period.</p>' +
+            '<button class="btn small" data-goto="tracker">Log my first cycle →</button>';
+          box.querySelector("[data-goto]").addEventListener("click", function(){ showView("tracker"); });
+          return;
+        }
+        var cd = st.countdown;
+        var cdText = cd > 0 ? "in <b>"+cd+" day"+(cd===1?"":"s")+"</b>" : (cd === 0 ? "<b>today!</b> 🎉" : "<b>"+Math.abs(cd)+" day"+(Math.abs(cd)===1?"":"s")+" ago</b> (expected)");
+        box.innerHTML =
+          '<div class="glance-big">Day '+st.cycleDay+' · '+st.phase+'</div>' +
+          '<div class="glance-row">' +
+          '<span class="glance-chip">🗓 Next period '+cdText+' — <b>'+pretty(st.nextPeriod)+'</b></span>' +
+          '<span class="glance-chip">💕 Ovulation: <b>'+pretty(st.ovulation)+'</b></span>' +
+          '<span class="glance-chip">🌿 Fertile: <b>'+pretty(st.fertileStart,{day:"numeric",month:"short"})+' – '+pretty(st.fertileEnd)+'</b></span>' +
+          '</div>' +
+          '<p style="font-weight:600;margin:12px 0 0;">Based on your average '+st.avgCycle+'-day cycle from '+st.count+' logged cycle'+(st.count===1?"":"s")+'. 🌸</p>';
+        var fc = (typeof getForecast === "function") ? getForecast(TODAY) : null;
+        if(fc){
+          var fcDiv = document.createElement("div");
+          fcDiv.style.cssText = "margin-top:14px;background:var(--pink-softer);border:1.5px dashed var(--pink);border-radius:16px;padding:12px 16px;";
+          fcDiv.innerHTML = '<b style="color:var(--plum);">🔮 Today\'s predicted mood:</b> ' + fc.moodEmoji + ' <b>' + fc.moodLabel + '</b> (' + fc.moodScore + '/10)<br/><span style="font-weight:700;">Likely today: ' + fc.symptoms.join(", ") + '</span>';
+          box.appendChild(fcDiv);
+        }
+      }
+
+      /* ---------- tracker: ring + stats ---------- */
+      var RING_C = 2 * Math.PI * 82;
+      var ringFg = $("ringFg");
+      ringFg.style.strokeDasharray = RING_C;
+      ringFg.style.strokeDashoffset = RING_C;
+
+      function refreshTracker(animate){
+        var st = computeStats();
+        if(!st){
+          $("ringDay").textContent = "—";
+          $("ringPhase").textContent = "No cycle yet";
+          $("ringOf").textContent = "log your first period 💌";
+          $("ringOf").style.fontSize = ".66rem";
+          $("ringCount").innerHTML = 'Log a cycle<br/><small>to see your countdown 💌</small>';
+          $("msNext").textContent = "—"; $("msAvgCycle").textContent = "—"; $("msAvgPeriod").textContent = "—";
+          ringFg.style.strokeDashoffset = RING_C;
+        } else {
+          var day = st.cycleDay;
+          $("ringDay").textContent = day ? ("Day " + day) : "—";
+          $("ringPhase").textContent = st.phase || "Cycle logged 🌸";
+          $("ringOf").style.fontSize = "";
+          $("ringOf").textContent = day ? ("of ~" + st.avgCycle + " days") : ("next starts " + pretty(st.lastStart));
+          if(st.countdown > 0) $("ringCount").innerHTML = st.countdown + ' <small>day'+(st.countdown===1?"":"s")+' to go 🌷</small><br/><small style="font-size:.95rem;">until your next period</small>';
+          else if(st.countdown === 0) $("ringCount").innerHTML = 'Today! 🎉<br/><small>your period is predicted today</small>';
+          else $("ringCount").innerHTML = Math.abs(st.countdown) + ' <small>day'+(Math.abs(st.countdown)===1?"":"s")+' late 🌙</small><br/><small style="font-size:.95rem;">period was expected — bodies vary 💗</small>';
+          $("msNext").textContent = pretty(st.nextPeriod);
+          $("msAvgCycle").textContent = st.avgCycle + " days";
+          $("msAvgPeriod").textContent = st.avgPeriod + " days";
+          var frac = day ? Math.min(day / st.avgCycle, 1) : 0;
+          // force re-flow so the ring animates from empty when asked
+          ringFg.style.transition = "none";
+          ringFg.style.strokeDashoffset = RING_C;
+          void ringFg.getBoundingClientRect();
+          ringFg.style.transition = "";
+          ringFg.style.strokeDashoffset = RING_C * (1 - frac);
+        }
+        countUp($("statCycles"), st ? st.count : 0);
+        countUp($("statAvgCycle"), st ? st.avgCycle : 0);
+        countUp($("statAvgPeriod"), st ? Math.round(st.avgPeriod) : 0);
+        countUp($("statDaysLogged"), Object.keys(dayLogs).length);
+        renderHistory();
+        renderCalendar();
+        renderGlance();
+        renderForecast(typeof selectedDate !== "undefined" && selectedDate ? selectedDate : TODAY);
+      }
+
+      /* ---------- log-cycle form ---------- */
+      $("cycleForm").addEventListener("submit", function(e){
+        e.preventDefault();
+        var s = $("startDate").value, en = $("endDate").value;
+        var err = $("formErr");
+        if(!s || !en){ err.textContent = "Please pick both a start and an end date 💗"; return; }
+        if(en < s){ err.textContent = "The end date can't be before the start date 🌙"; return; }
+        if(diffDays(en, s) + 1 > 15){ err.textContent = "That period looks longer than 15 days — please double-check the dates 🌸"; return; }
+        err.textContent = "";
+        cycles.push({ id: "c" + Date.now().toString(36) + Math.random().toString(36).slice(2, 9), start: s, end: en });
+        cycles.sort(function(a,b){ return a.start < b.start ? -1 : 1; });
+        save("herhealth_cycles", cycles);
+        var len = diffDays(en, s) + 1;
+        var sum = $("formSummary");
+        sum.innerHTML = "🌸 <b>Cycle saved!</b> " + pretty(s) + " → " + pretty(en) + " · " + len + " day" + (len===1?"":"s") + " long. Your predictions just got smarter ✨";
+        sum.classList.add("show");
+        burstFromEl($("saveCycleBtn"));
+        toast("Cycle saved 💗 Predictions updated!");
+        chartDrawn = false;
+        refreshTracker(true);
+        drawChart(); chartDrawn = true;
+      });
+
+      /* ---------- history ---------- */
+      function renderHistory(){
+        var box = $("historyList");
+        if(!cycles.length){
+          box.innerHTML = '<p class="empty-note">No cycles logged yet — your history will bloom here 🌷</p>';
+          return;
+        }
+        var sorted = cycles.slice().sort(function(a,b){ return a.start < b.start ? 1 : -1; });
+        box.innerHTML = "";
+        sorted.forEach(function(c){
+          var len = diffDays(c.end, c.start) + 1;
+          var div = document.createElement("div");
+          div.className = "hist-item";
+          div.innerHTML = '<span class="h-dates">🩸 ' + pretty(c.start) + ' → ' + pretty(c.end) + '</span>' +
+                          '<span class="h-meta">' + len + ' day' + (len===1?'':'s') + '</span>';
+          var del = document.createElement("button");
+          del.className = "hist-del"; del.textContent = "🗑 Delete";
+          del.setAttribute("aria-label", "Delete cycle starting " + pretty(c.start));
+          del.addEventListener("click", function(){
+            cycles = cycles.filter(function(x){ return x.id !== c.id; });
+            save("herhealth_cycles", cycles);
+            toast("Cycle removed 🌙");
+            chartDrawn = false;
+            refreshTracker(true);
+            drawChart(); chartDrawn = true;
+          });
+          div.appendChild(del);
+          box.appendChild(div);
+        });
+      }
+
+      /* ---------- calendar ---------- */
+      var calCursor = new Date(); calCursor.setDate(1);
+      var selectedDate = null;
+      var DOW = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+      $("calDow").innerHTML = DOW.map(function(d){ return '<div class="cal-dow">'+d+'</div>'; }).join("");
+
+      function renderCalendar(){
+        var y = calCursor.getFullYear(), m = calCursor.getMonth();
+        $("calTitle").textContent = calCursor.toLocaleDateString("en-GB", { month:"long", year:"numeric" });
+        var first = new Date(y, m, 1);
+        var offset = (first.getDay() + 6) % 7; // Monday start
+        var daysInMonth = new Date(y, m+1, 0).getDate();
+        var grid = $("calGrid");
+        grid.innerHTML = "";
+        var i, btn;
+        for(i=0;i<offset;i++){
+          var empty = document.createElement("div");
+          empty.className = "cal-day empty";
+          grid.appendChild(empty);
+        }
+        for(var d=1; d<=daysInMonth; d++){
+          (function(d){
+            var ds = fmt(new Date(y, m, d));
+            var cl = classify(ds);
+            btn = document.createElement("button");
+            btn.className = "cal-day";
+            btn.style.animationDelay = ((offset + d) * 22) + "ms";
+            btn.textContent = d;
+            if(cl.period) btn.classList.add("d-period");
+            else if(cl.ovulation) btn.classList.add("d-ovulation");
+            else if(cl.predicted) btn.classList.add("d-predicted");
+            else if(cl.fertile) btn.classList.add("d-fertile");
+            if(ds === TODAY) btn.classList.add("d-today");
+            if(ds === selectedDate) btn.classList.add("selected");
+            if(dayLogs[ds]){
+              var dot = document.createElement("span");
+              dot.className = "dot";
+              btn.appendChild(dot);
+            }
+            btn.setAttribute("aria-label", pretty(ds, {weekday:"long", day:"numeric", month:"long"}));
+            btn.addEventListener("click", function(){ selectDay(ds); });
+            grid.appendChild(btn);
+          })(d);
+        }
+      }
+      $("calPrev").addEventListener("click", function(){ calCursor.setMonth(calCursor.getMonth()-1); renderCalendar(); });
+      $("calNext").addEventListener("click", function(){ calCursor.setMonth(calCursor.getMonth()+1); renderCalendar(); });
+
+      /* ---------- calendar day selection (forecast only) ---------- */
+      function selectDay(ds){
+        selectedDate = ds;
+        renderCalendar();
+        renderForecast(ds);
+        var fs = $("forecastSection");
+        if(fs && document.getElementById("view-tracker").classList.contains("active")){
+          var r = fs.getBoundingClientRect();
+          if(r.bottom < 0 || r.top > window.innerHeight) fs.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "nearest" });
+        }
+      }
+
+      /* ---------- hormone & mood chart ---------- */
+      function smoothPath(pts){
+        if(pts.length < 3) return "M" + pts.map(function(p){ return p[0]+","+p[1]; }).join(" L");
+        var d = "M" + pts[0][0].toFixed(1) + "," + pts[0][1].toFixed(1);
+        for(var i=0;i<pts.length-1;i++){
+          var p0 = pts[Math.max(0,i-1)], p1 = pts[i], p2 = pts[i+1], p3 = pts[Math.min(pts.length-1,i+2)];
+          var c1x = p1[0] + (p2[0]-p0[0])/6, c1y = p1[1] + (p2[1]-p0[1])/6;
+          var c2x = p2[0] - (p3[0]-p1[0])/6, c2y = p2[1] - (p3[1]-p1[1])/6;
+          d += "C" + c1x.toFixed(1) + "," + c1y.toFixed(1) + " " + c2x.toFixed(1) + "," + c2y.toFixed(1) + " " + p2[0].toFixed(1) + "," + p2[1].toFixed(1);
+        }
+        return d;
+      }
+      function drawChart(){
+        var st = computeStats();
+        var N = st ? st.avgCycle : 28;
+        var ov = N - 14;
+        var W = 920, H = 390, padL = 42, padR = 18, padT = 24, padB = 40;
+        var iw = W - padL - padR, ih = H - padT - padB;
+        function X(day){ return padL + (day-1)/(N-1) * iw; }
+        function Y(v){ return padT + (1 - v/100) * ih; }
+        function gauss(x, c, w){ var t = (x-c)/w; return Math.exp(-0.5*t*t); }
+        var ePts = [], pPts = [], mPts = [];
+        for(var d=1; d<=N; d++){
+          var e = 16 + 62*gauss(d, ov, 2.4) + 15*gauss(d, ov+8, 3.4);
+          var p = 7 + 68*gauss(d, ov+7, 3.8) + 8*gauss(d, ov, 2);
+          var m = 52 + 26*gauss(d, ov, 3.2) - 22*gauss(d, N-0.5, 2.1) - 16*gauss(d, 2, 1.7);
+          ePts.push([X(d), Y(Math.min(e,97))]);
+          pPts.push([X(d), Y(Math.min(p,97))]);
+          mPts.push([X(d), Y(Math.max(6, Math.min(m,96)))]);
+        }
+        var gridSvg = "";
+        [25,50,75].forEach(function(v){
+          gridSvg += '<line x1="'+padL+'" y1="'+Y(v)+'" x2="'+(W-padR)+'" y2="'+Y(v)+'" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 5"/>';
+        });
+        var todayMark = "";
+        if(st && st.cycleDay && st.cycleDay <= N){
+          todayMark = '<line x1="'+X(st.cycleDay)+'" y1="'+padT+'" x2="'+X(st.cycleDay)+'" y2="'+(H-padB)+'" stroke="#d6336c" stroke-width="2" stroke-dasharray="5 4" opacity=".65"/>' +
+                      '<text x="'+X(st.cycleDay)+'" y="'+(padT-4)+'" text-anchor="middle" font-size="14" font-weight="800" fill="#d6336c">you 💗</text>';
+        }
+        var svg =
+          '<svg class="chart-svg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Line chart of estrogen, progesterone and mood across a '+N+' day cycle">' +
+          gridSvg +
+          '<path d="'+smoothPath(ePts)+' L'+X(N)+','+(H-padB)+' L'+X(1)+','+(H-padB)+' Z" fill="#f06595" opacity=".12" stroke="none"/>' +
+          todayMark +
+          '<path class="chart-line" data-line d="'+smoothPath(ePts)+'" stroke="#f06595"/>' +
+          '<path class="chart-line" data-line d="'+smoothPath(pPts)+'" stroke="#9775fa"/>' +
+          '<path class="chart-line" data-line d="'+smoothPath(mPts)+'" stroke="#ffa94d"/>' +
+          '<circle cx="'+X(ov)+'" cy="'+Y(78)+'" r="4.5" fill="#f06595"/>' +
+          '<text x="'+X(1)+'" y="'+(H-8)+'" font-size="14" font-weight="700" fill="var(--ink-soft)">Day 1</text>' +
+          '<text x="'+X(ov)+'" y="'+(H-8)+'" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink-soft)">Ovulation · Day '+ov+'</text>' +
+          '<text x="'+X(N)+'" y="'+(H-8)+'" text-anchor="end" font-size="14" font-weight="700" fill="var(--ink-soft)">Day '+N+'</text>' +
+          '</svg>' +
+          '<p style="font-weight:600;font-size:.9rem;color:var(--ink-soft);margin:8px 0 0;">Drawn over your average '+N+'-day cycle — estrogen peaks at ovulation, progesterone takes over in the luteal phase, and mood often dips just before your period. 🌙</p>';
+        $("chartBox").innerHTML = svg;
+        if(!reduced){
+          $("chartBox").querySelectorAll("[data-line]").forEach(function(path, i){
+            var len = path.getTotalLength();
+            path.style.strokeDasharray = len;
+            path.style.strokeDashoffset = len;
+            path.getBoundingClientRect();
+            path.style.transition = "stroke-dashoffset 1.8s ease " + (i*0.25) + "s";
+            path.style.strokeDashoffset = "0";
+          });
+        }
+      }
+
+      /* ---------- self-care tabs ---------- */
+      document.querySelectorAll(".sc-tab").forEach(function(tab){
+        tab.addEventListener("click", function(){
+          document.querySelectorAll(".sc-tab").forEach(function(t){ t.classList.remove("active"); });
+          tab.classList.add("active");
+          document.querySelectorAll(".sc-panel").forEach(function(p){
+            p.classList.toggle("active", p.getAttribute("data-panel") === tab.getAttribute("data-tab"));
+          });
+          if(tab.getAttribute("data-tab") !== "breathe") stopBreathing();
+        });
+      });
+
+      /* ---------- self-care scroller & back-to-top ---------- */
+      (function(){
+        var scScroll = $("scScroll"), topBtn = $("scTopBtn");
+        if(!scScroll || !topBtn) return;
+        function updateTopBtn(){
+          var inSelfCare = document.getElementById("view-selfcare").classList.contains("active");
+          var scrolled = scScroll.scrollTop > 160 || window.scrollY > 320;
+          topBtn.classList.toggle("show", inSelfCare && scrolled);
+        }
+        scScroll.addEventListener("scroll", updateTopBtn, { passive: true });
+        window.addEventListener("scroll", updateTopBtn, { passive: true });
+        topBtn.addEventListener("click", function(){
+          scScroll.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+          window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+        });
+        document.querySelectorAll(".sc-tab").forEach(function(t){
+          t.addEventListener("click", function(){ scScroll.scrollTop = 0; setTimeout(updateTopBtn, 50); });
+        });
+        // refresh visibility when switching views
+        document.querySelectorAll(".navbtn, [data-goto]").forEach(function(b){
+          b.addEventListener("click", function(){ setTimeout(updateTopBtn, 80); });
+        });
+        updateTopBtn();
+      })();
+
+      /* ---------- affirmations ---------- */
+      var affirmations = [
+        "You are enough, exactly as you are. 💗",
+        "My body is my home, and I treat it with kindness. 🌷",
+        "Every phase of my cycle has its own kind of power. 🌙",
+        "Rest is not a reward — it's a need, and I honour it. 🌸",
+        "I listen to my body, and I trust what it tells me. ✨",
+        "Softness is strength. I can be both gentle and powerful. 💕",
+        "I am more than my hardest day. Bloom takes time. 🌱"
+      ];
+      var affIdx = 0, affEl = $("affirmBanner");
+      setInterval(function(){
+        if(reduced) { affIdx = (affIdx+1) % affirmations.length; affEl.textContent = affirmations[affIdx]; return; }
+        affEl.classList.add("out");
+        setTimeout(function(){
+          affIdx = (affIdx+1) % affirmations.length;
+          affEl.textContent = affirmations[affIdx];
+          affEl.classList.remove("out");
+        }, 360);
+      }, 6000);
+
+      /* ---------- myth flip cards ---------- */
+      var myths = [
+        { myth:"You can't exercise during your period", fact:"Gentle movement actually helps! Exercise releases endorphins that ease cramps and lift your mood. Listen to your body — a walk or soft yoga counts. 🧘" },
+        { myth:"No baths during periods", fact:"Warm baths are wonderful on your period. They relax crampy muscles and there's nothing unhygienic about them — warm water is pure comfort. 🛁" },
+        { myth:"Period blood is dirty", fact:"Period blood is just blood and tissue from the uterus lining — the same kind of blood as anywhere else in your body. It's natural, not dirty. 🌸" },
+        { myth:"Cold foods stop your flow", fact:"Ice cream and cold drinks don't stop or delay your period. Your flow is controlled by hormones, not by the temperature of your snacks. 🍦" },
+        { myth:"Young girls don't get periods", fact:"Periods can start any time between about 8 and 15 — an early start is completely normal and nothing to be scared or ashamed of. 🎒" },
+        { myth:"You can't get pregnant during periods", fact:"It's less likely, but still possible — sperm can survive for days, and cycles vary. If pregnancy isn't the plan, protection matters on every day. 💗" }
+      ];
+      var mythGrid = $("mythGrid");
+      myths.forEach(function(m){
+        var card = document.createElement("div");
+        card.className = "flip";
+        card.setAttribute("role", "button");
+        card.setAttribute("tabindex", "0");
+        card.setAttribute("aria-label", "Myth: " + m.myth + ". Activate to reveal the fact.");
+        card.innerHTML =
+          '<div class="flip-inner">' +
+            '<div class="flip-face flip-front"><span class="tag">🚫 Myth</span><span class="myth">"'+m.myth+'"</span><span class="tap">Tap to reveal the fact ✨</span></div>' +
+            '<div class="flip-face flip-back"><span class="tag">✅ Fact</span><span class="fact">'+m.fact+'</span><span class="tap">Tap to flip back ↩</span></div>' +
+          '</div>';
+        function flip(){ card.classList.toggle("flipped"); }
+        card.addEventListener("click", flip);
+        card.addEventListener("keydown", function(e){
+          if(e.key === "Enter" || e.key === " "){ e.preventDefault(); flip(); }
+        });
+        mythGrid.appendChild(card);
+      });
+
+      /* ---------- breathing 4-4-4 ---------- */
+      var breathing = false, breatheTimeout = null, breatheTick = null, rounds = 0;
+      var PHASES = [
+        { label:"Breathe in 🌬️", scale:1.28 },
+        { label:"Hold 🌿", scale:1.28 },
+        { label:"Breathe out 🍃", scale:1.0 }
+      ];
+      function runPhase(i){
+        if(!breathing) return;
+        var ph = PHASES[i % 3];
+        if(i % 3 === 0 && i > 0){
+          rounds++;
+          $("breatheMeta").textContent = "🌸 " + rounds + " round" + (rounds===1?"":"s") + " complete — you're doing beautifully.";
+        }
+        $("breathePhase").textContent = ph.label;
+        var orb = $("breatheOrb");
+        orb.style.transitionDuration = (i % 3 === 1) ? "0.6s" : "4s";
+        orb.style.transform = "scale(" + ph.scale + ")";
+        var left = 4;
+        $("breatheCount").textContent = left;
+        clearInterval(breatheTick);
+        breatheTick = setInterval(function(){
+          left--;
+          if(left >= 1) $("breatheCount").textContent = left;
+        }, 1000);
+        breatheTimeout = setTimeout(function(){ runPhase(i+1); }, 4000);
+      }
+      function stopBreathing(){
+        breathing = false;
+        clearTimeout(breatheTimeout);
+        clearInterval(breatheTick);
+        var orb = $("breatheOrb");
+        orb.style.transitionDuration = "0.8s";
+        orb.style.transform = "scale(1)";
+        $("breathePhase").textContent = "Ready?";
+        $("breatheCount").textContent = "🌸";
+        $("breatheBtn").textContent = "▶ Start breathing";
+      }
+      $("breatheBtn").addEventListener("click", function(){
+        if(breathing){ stopBreathing(); return; }
+        breathing = true; rounds = 0;
+        $("breatheBtn").textContent = "⏹ Stop";
+        $("breatheMeta").textContent = "Follow the circle — in for 4, hold for 4, out for 4. 🫧";
+        runPhase(0);
+      });
+
+      /* ---------- init ---------- */
+      renderGlance();
+      refreshTracker(false);
+      drawChart(); chartDrawn = true;
+      selectDay(TODAY);
+      observeReveals();
+    })();
+    </script>
+  </body>
 </html>
