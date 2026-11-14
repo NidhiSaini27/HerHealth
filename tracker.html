@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>HerHealth | Tracker</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -10,14 +11,14 @@
     <h1>HerHealth 🌷</h1>
     <nav>
       <a href="index.html">Home</a>
-      <a href="tracker.html">Tracker</a>
+      <a href="tracker.html" class="active">Tracker</a>
       <a href="selfcare.html">Self-Care</a>
     </nav>
   </header>
 
   <main class="tracker-container">
     <!-- Smart Period Tracker Panel -->
-    <section class="tracker-panel">
+    <section class="tracker-panel top-panel reveal in">
       <h2>🩸 Smart Period Tracker</h2>
       <form id="period-form">
         <label for="start-date">Start Date:</label>
@@ -32,22 +33,84 @@
       <div id="tracker-summary">
         <!-- Summary will appear here -->
       </div>
-    </section>
 
-    <!-- 🌸 Calendar View -->
-    <section class="calendar-view">
-      <h2>Monthly Cycle View</h2>
-      <div id="calendar-grid">
-        <!-- JS will populate this -->
+      <div class="ring-zone">
+        <div class="ring-wrap">
+          <svg width="128" height="128" viewBox="0 0 128 128">
+            <defs>
+              <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff66b3"/>
+                <stop offset="100%" stop-color="#b388ff"/>
+              </linearGradient>
+            </defs>
+            <circle class="ring-bg" cx="64" cy="64" r="54"></circle>
+            <circle class="ring-fg" id="ring-fg" cx="64" cy="64" r="54"></circle>
+          </svg>
+          <div class="ring-center">
+            <div class="rc-day" id="rc-day">—</div>
+            <div class="rc-phase" id="rc-phase">log your first period 💌</div>
+          </div>
+        </div>
+        <div class="ring-info" id="ring-info"></div>
+      </div>
+
+      <div class="stats-strip">
+        <div class="stat-box"><div class="stat-num" id="stat-cycles">0</div><div class="stat-label">Cycles logged</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat-avgcycle">0</div><div class="stat-label">Avg cycle days</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat-avgperiod">0</div><div class="stat-label">Avg period days</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat-logs">0</div><div class="stat-label">Days logged</div></div>
       </div>
     </section>
 
-    <!-- 💖 Hormonal Mood Tracker Section -->
-    <section class="tracker-graph-section">
-      <h2>Hormonal Cycle & Mood Visualizer</h2>
-      <canvas id="hormoneChart" class="chart-box"></canvas>
-    </section>
+    <!-- Forecast + Graph, side by side -->
+    <div class="side-row">
+      <section class="forecast-panel reveal in">
+        <h2 id="forecast-title">🔮 Today's Forecast</h2>
+        <div class="forecast-mood" id="forecast-mood">Log a cycle to unlock predictions 🌸</div>
+        <div class="log-label" style="margin-top:12px">Likely symptoms</div>
+        <div class="chip-row" id="forecast-symptoms"></div>
+        <p class="forecast-why" id="forecast-why"></p>
+        <p class="empty-note">Predicted from your hormone curve — tap any day on the calendar to forecast that day.</p>
+      </section>
+
+      <section class="tracker-graph-section reveal in d1">
+        <h2>Hormonal Cycle & Mood Visualizer</h2>
+        <canvas id="hormoneChart" class="chart-box"></canvas>
+      </section>
+    </div>
+
+    <!-- Calendar + History, side by side -->
+    <div class="side-row">
+      <section class="calendar-view reveal in">
+        <h2>Monthly Cycle View</h2>
+        <div class="cal-head">
+          <button type="button" class="cal-nav" id="cal-prev" aria-label="Previous month">‹</button>
+          <h3 id="cal-title"></h3>
+          <button type="button" class="cal-nav" id="cal-next" aria-label="Next month">›</button>
+        </div>
+        <div id="calendar-grid">
+          <!-- JS will populate this -->
+        </div>
+        <div class="cal-legend">
+          <span><span class="swatch" style="background:#ffb3d9"></span>Period</span>
+          <span><span class="swatch" style="background:#ffd7ea;border:2px dashed #ff66b3"></span>Predicted</span>
+          <span><span class="swatch" style="background:#d9f5ec"></span>Fertile</span>
+          <span><span class="swatch" style="background:#e7dcff"></span>Ovulation</span>
+          <span><span class="swatch" style="background:#ffe6f0;border:2px solid #d6336c"></span>Today</span>
+          <span><span class="swatch" style="background:#d6336c;border-radius:50%"></span>Daily log</span>
+        </div>
+      </section>
+
+      <section class="history-panel reveal in d1">
+        <h2>🗂 Your Cycle History</h2>
+        <div id="history-list"></div>
+      </section>
+    </div>
   </main>
+
+  <footer>
+    <p>Made with 💗 by Nidhi</p>
+  </footer>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

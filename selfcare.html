@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Self-Care | HerHealth</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -11,18 +12,21 @@
     <nav>
       <a href="index.html">Home</a>
       <a href="tracker.html">Tracker</a>
-      <a href="selfcare.html">Self-Care</a>
+      <a href="selfcare.html" class="active">Self-Care</a>
     </nav>
   </header>
+
+  <div class="affirmation-banner reveal in"><span id="affirmation-text">🌸 Your body is not a problem to fix — it is a story to listen to.</span></div>
 
   <div class="selfcare-container">
     <div class="selfcare-sidebar">
       <h2>🌸 Self-Care</h2>
-      <button class="care-btn active" onclick="showContent('cycle')">Cycle Phases</button>
-      <button class="care-btn" onclick="showContent('food')">Nutrition</button>
-      <button class="care-btn" onclick="showContent('move')">Workout</button>
-      <button class="care-btn" onclick="showContent('mood')">Teen Guide</button>
-      <button class="care-btn" onclick="showContent('myth')">Myths</button>
+      <button class="care-btn active" onclick="showContent('cycle', this)">Cycle Phases</button>
+      <button class="care-btn" onclick="showContent('food', this)">Nutrition</button>
+      <button class="care-btn" onclick="showContent('move', this)">Workout</button>
+      <button class="care-btn" onclick="showContent('mood', this)">Teen Guide</button>
+      <button class="care-btn" onclick="showContent('myth', this)">Myths</button>
+      <button class="care-btn" onclick="showContent('breathe', this)">Breathe 🫧</button>
     </div>
 
     <div class="selfcare-dashboard">
@@ -66,11 +70,6 @@
     <li>💧 <strong>Hydrate:</strong> Keep water nearby for real relief.</li>
   </ul>
       </div>
-
-
-
-
-
 
       <div id="food" class="content-box">
         <h3>Nutrition</h3>
@@ -120,12 +119,6 @@
   </ul>
       </div>
 
-
-
-
-
-
-
       <div id="mood" class="content-box">
         <h3>First Period?<br> Don’t Worry, You’ve Got This!</h3>
   <p>Getting your first period can feel confusing but it's totally normal and a beautiful sign your body’s growing up. Here’s a quick guide to help you feel ready and confident:</p>
@@ -164,53 +157,59 @@
 
       <div id="myth" class="content-box">
         <h3>Period Myth Busters</h3>
-  <p>Let’s clear the air with some cute & honest facts because your period deserves truth, not taboos 💖</p>
+  <p>Let’s clear the air with some cute & honest facts because your period deserves truth, not taboos 💖 Tap a card to flip it!</p>
 
   <div class="myth-fact-grid">
-    <div class="myth-box">
-      <h4>🩸 Myth:</h4>
-      <p>You can’t exercise during your period.</p><br>
-      <h4>✅ Fact:</h4>
-      <p>Light yoga or walks reduce cramps and boost mood!</p>
-    </div>
+    <div class="flip"><div class="flip-inner">
+      <div class="flip-front"><h4>🩸 Myth:</h4><p>You can’t exercise during your period.</p><div class="tap-hint">Tap to see the fact →</div></div>
+      <div class="flip-back"><h4>✅ Fact:</h4><p>Light yoga or walks reduce cramps and boost mood!</p></div>
+    </div></div>
 
-    <div class="myth-box">
-      <h4>🛁 Myth:</h4>
-      <p>No baths during periods.</p><br>
-      <h4>✅ Fact:</h4>
-      <p>Warm baths are totally safe and ease pain & stress!</p>
-    </div>
+    <div class="flip"><div class="flip-inner">
+      <div class="flip-front"><h4>🛁 Myth:</h4><p>No baths during periods.</p><div class="tap-hint">Tap to see the fact →</div></div>
+      <div class="flip-back"><h4>✅ Fact:</h4><p>Warm baths are totally safe and ease pain & stress!</p></div>
+    </div></div>
 
-    <div class="myth-box">
-      <h4>👻 Myth:</h4>
-      <p>Period blood is dirty.</p><br>
-      <h4>✅ Fact:</h4>
-      <p>It’s natural and clean — your body is magical ✨</p>
-    </div>
+    <div class="flip"><div class="flip-inner">
+      <div class="flip-front"><h4>👻 Myth:</h4><p>Period blood is dirty.</p><div class="tap-hint">Tap to see the fact →</div></div>
+      <div class="flip-back"><h4>✅ Fact:</h4><p>It’s natural and clean — your body is magical ✨</p></div>
+    </div></div>
 
-    <div class="myth-box">
-      <h4>🍦 Myth:</h4>
-      <p>Cold foods stop your flow.</p><br>
-      <h4>✅ Fact:</h4>
-      <p>Eat that ice cream, queen 🍨 — it doesn’t change a thing.</p>
-    </div>
+    <div class="flip"><div class="flip-inner">
+      <div class="flip-front"><h4>🍦 Myth:</h4><p>Cold foods stop your flow.</p><div class="tap-hint">Tap to see the fact →</div></div>
+      <div class="flip-back"><h4>✅ Fact:</h4><p>Eat that ice cream, queen 🍨 — it doesn’t change a thing.</p></div>
+    </div></div>
 
-    <div class="myth-box">
-      <h4>👧 Myth:</h4>
-      <p>Young girls don’t get periods.</p><br>
-      <h4>✅ Fact:</h4>
-      <p>It’s normal to start between 9 and 16. You’re not alone 💗</p>
-    </div>
+    <div class="flip"><div class="flip-inner">
+      <div class="flip-front"><h4>👧 Myth:</h4><p>Young girls don’t get periods.</p><div class="tap-hint">Tap to see the fact →</div></div>
+      <div class="flip-back"><h4>✅ Fact:</h4><p>It’s normal to start between 9 and 16. You’re not alone 💗</p></div>
+    </div></div>
 
-    <div class="myth-box">
-      <h4>🚫 Myth:</h4>
-      <p>You can’t get pregnant during periods.</p><br>
-      <h4>✅ Fact:</h4>
-      <p>It’s rare, but possible! Always stay informed 🌙</p>
+    <div class="flip"><div class="flip-inner">
+      <div class="flip-front"><h4>🚫 Myth:</h4><p>You can’t get pregnant during periods.</p><div class="tap-hint">Tap to see the fact →</div></div>
+      <div class="flip-back"><h4>✅ Fact:</h4><p>It’s rare, but possible! Always stay informed 🌙</p></div>
+    </div></div>
+  </div>
       </div>
+
+      <div id="breathe" class="content-box">
+        <h3>Breathe With Me 🫧</h3>
+        <p>Cramps, stress or a heavy head? One minute of slow breathing genuinely helps. Follow the circle — breathe in for 4, hold for 4, breathe out for 4.</p>
+        <div class="breath-zone">
+          <div class="breath-circle" id="breath-circle"><span id="breath-label">Ready?</span></div>
+          <button type="button" class="btn" onclick="toggleBreathing(this)">▶ Start breathing</button>
+        </div>
+      </div>
+
     </div>
   </div>
-</div>
+
+  <footer>
+    <p>Made with 💗 by Nidhi</p>
+  </footer>
+
+  <button type="button" class="to-top" id="to-top">↑ Back to top</button>
+
   <script src="script.js"></script>
 </body>
 </html>
